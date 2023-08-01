@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+    </head>
+    <body>
+        <script>
+            // 获取 MediaStream 对象
+            // let _this = this;
+            // function handleSrcChange(newSrc) {
+            //     if (newSrc) {
+            //       const videoElement = this;
+            //       let newStream = videoElement.captureStream();
+            //       let newAudioTrack = newStream.getAudioTracks()[0];
+            //       // _this.recordStream.addTrack(audioTrack);
+            //       // let oldAudioTrack = _this.recordStream.getAudioTracks()[0];
+            //       // _this.recordStream.removeTrack(oldAudioTrack);
+            //       // _this.recordStream.addTrack(newAudioTrack);
+            //       let cloneStream = _this.recordStream.clone();
+            //       let cloneVT = cloneStream.getVideoTracks()[0];
+            //       let cloneAt = cloneStream.getAudioTracks()[0];
+            //       cloneStream.removeTrack(cloneAt);
+            //       cloneStream.addTrack(newAudioTrack);
+            //       _this.recordStream=cloneStream
+            //       console.log(cloneStream.getTracks(),'clone stream tracks 004');
+            //       console.log(_this.recordStream.getTracks(), 'merged 003');
+            //       analyserAudio(newStream);
+            //     }
+            // }
+            // const originalSetSrc = HTMLVideoElement.prototype.setAttribute;
+            // if (this.recordingStatus) {
+            //      Object.defineProperty(HTMLVideoElement.prototype, 'src', {
+            //       set: function (newSrc) {
+            //           originalSetSrc.call(this, 'src', newSrc);
+            //           setTimeout(() => {
+            //                 handleSrcChange.call(this, newSrc);
+            //           },500)
+            //       }
+            // });
+            // }
+            navigator.mediaDevices.getUserMedia({audio: true}).then((stream) => {
+
+
+                const audioContext = new AudioContext();
+                const audioTracks = stream.getAudioTracks();
+
+                // 创建 MediaStreamAudioSourceNode
+                const sourceNode = audioContext.createMediaStreamSource(stream);
+
+                // 创建 AnalyserNode
+                const analyserNode = audioContext.createAnalyser();
+                analyserNode.fftSize = 2048;
+                // 设置 FFT 大小
+
+                // 连接源节点和分析节点
+                sourceNode.connect(analyserNode);
+
+                // 获取音频数据
+                const bufferLength = analyserNode.fftSize;
+                const dataArray = new Uint8Array(bufferLength);
+                const hasSound = dataArray.some(value => value !== 128);
+                if (hasSound) {
+                    console.log('音频有声音！');
+                } else {
+                    console.log('音频没有声音！');
+                }
+                // 创建 Canvas 元素
+                const canvas = document.createElement('canvas');
+                const canvasCtx = canvas.getContext('2d');
+                document.body.appendChild(canvas);
+
+                // 设置 Canvas 尺寸
+                canvas.width = window.innerWidth / 2;
+                canvas.height = window.innerHeight;
+
+                function drawWaveform() { // 将当前音频数据复制到 dataArray 数组
+                    analyserNode.getByteTimeDomainData(dataArray);
+
+                    // 清空 Canvas
+                    canvasCtx.clearRect(0, 0, canvas.width, canvas.height);
+
+                    // 绘制波形图
+                    canvasCtx.lineWidth = 2;
+                    canvasCtx.strokeStyle = 'red';
+                    canvasCtx.beginPath();
+                    const sliceWidth = canvas.width * 1.0 / bufferLength;
+                    let x = 0;
+                    for (let i = 0; i < bufferLength; i++) {
+                        const v = dataArray[i] / 128.0;
+                        const y = v * canvas.height / 2;
+                        if (i === 0) {
+                            canvasCtx.moveTo(x, y);
+                        } else {
+                            canvasCtx.lineTo(x, y);
+                        } x += sliceWidth;
+                    }
+                    canvasCtx.lineTo(canvas.width, canvas.height / 2);
+                    canvasCtx.stroke();
+
+                    // 通过 requestAnimationFrame 实现持续绘制
+                    requestAnimationFrame(drawWaveform);
+                }
+
+                // 开始绘制波形图
+                drawWaveform();
+
+            }).catch((error) => {
+                console.error('获取媒体流失败:', error);
+            });
+        </script>
+        <script>
+            function ana(stream) {
+                const audioContext = new AudioContext();
+                const audioTracks = stream.getAudioTracks();
+
+                // 创建 MediaStreamAudioSourceNode
+                const sourceNode = audioContext.createMediaStreamSource(stream);
+
+                // 创建 AnalyserNode
+                const analyserNode = audioContext.createAnalyser();
+                analyserNode.fftSize = 2048;
+                // 设置 FFT 大小
+
+                // 连接源节点和分析节点
+                sourceNode.connect(analyserNode);
+
+                // 获取音频数据
+                const bufferLength = analyserNode.fftSize;
+                const dataArray = new Uint8Array(bufferLength);
+
+                // 创建 Canvas 元素
+                const canvas = document.createElement('canvas');
+                const canvasCtx = canvas.getContext('2d');
+                document.body.appendChild(canvas);
+
+                // 设置 Canvas 尺寸
+                canvas.width = window.innerWidth / 2;
+                canvas.height = window.innerHeight;
+
+                function drawWaveform() { // 将当前音频数据复制到 dataArray 数组
+                    analyserNode.getByteTimeDomainData(dataArray);
+
+                    // 清空 Canvas
+                    canvasCtx.clearRect(0, 0, canvas.width, canvas.height);
+
+                    // 绘制波形图
+                    canvasCtx.lineWidth = 2;
+                    canvasCtx.strokeStyle = 'red';
+                    canvasCtx.beginPath();
+                    const sliceWidth = canvas.width * 1.0 / bufferLength;
+                    let x = 0;
+                    for (let i = 0; i < bufferLength; i++) {
+                        const v = dataArray[i] / 128.0;
+                        const y = v * canvas.height / 2;
+                        if (i === 0) {
+                            canvasCtx.moveTo(x, y);
+                        } else {
+                            canvasCtx.lineTo(x, y);
+                        } x += sliceWidth;
+                    }
+                    canvasCtx.lineTo(canvas.width, canvas.height / 2);
+                    canvasCtx.stroke();
+
+                    // 通过 requestAnimationFrame 实现持续绘制
+                    requestAnimationFrame(drawWaveform);
+                }
+
+                // 开始绘制波形图
+                drawWaveform();
+            }
+        </script>
+    </body>
+</html>

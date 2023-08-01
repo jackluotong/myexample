@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script src="https://unpkg.com/mux.js@5.6.3/dist/mux.min.js"></script>
+    <script src="./index.js"></script>
+    <script>
+        function handleFileSelect(event) {
+            const file = event.target.files[0]; // 获取用户选择的文件
+            const reader = new FileReader();
+
+            reader.onload = function (event) {
+                    const fileData = new Uint8Array(reader.result);
+                    parseMP4File(fileData)
+                    // const mp4Data = muxjs.mp4.tools.inspect(fileData);
+            };
+            reader.readAsArrayBuffer(file); // 以数组缓冲区的形式读取文件内容
+            }
+
+            const fileInput = document.createElement('input');
+            fileInput.type = 'file';
+            fileInput.addEventListener('change', handleFileSelect);
+            document.body.appendChild(fileInput);
+
+    </script>
+</body>
+</html>

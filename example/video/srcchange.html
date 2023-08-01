@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <title>Video Src Change Example</title>
+    </head>
+
+    <body>
+        <!-- 在 video 元素上添加 id 属性，方便获取该元素 -->
+        <video
+            id="myVideo" controls>
+            <!-- 这里可以放置视频源 -->
+            <source src="video.mp4" type="video/mp4">
+        </video>
+
+        <script>
+            function handleSrcChange(newSrc) {
+                const videoElement = this;
+                let at = videoElement.captureStream().getAudioTracks()[0];
+                console.log(at);
+            }
+
+            // 用于保存原始的 set 方法
+            const originalSetSrc = HTMLVideoElement.prototype.setAttribute;
+
+            // 劫持 video 元素的 src 属性
+            Object.defineProperty(HTMLVideoElement.prototype, 'src', {
+                set: function (newSrc) { // 调用原始的 set 方法
+                    originalSetSrc.call(this, 'src', newSrc);
+
+                    // 触发处理函数
+                    handleSrcChange.call(this, newSrc);
+                }
+            });
+        </script>
+    </body>
+
+</html>

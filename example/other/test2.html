@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+        <video  id="video_play" autoplay controls style="width:1920px;height: 1080px;" src="http://113.31.113.139:7781/rtsp/fa2f51bc-f8a0-41f8-8908-c78f31dc8c7d.mp4"></video>
+        <video id="replay_video" autoplay controls></video>
+        <video id="video" autoplay controls style="width:1920px;height: 1080px;"></video>
+        <button id="record">start record</button>
+        <button id="replay" disabled>play</button>
+        <button id="download" disabled>download</button>
+        <script>
+        
+            var images = ['./img2.png', './img3.png','img4.png'];
+            var currentImageIndex = 0;
+            const videoElement = document.getElementById('video');  
+            const video_play = document.getElementById('video_play');
+            const replay_video = document.getElementById('replay_video');
+            const recordedData = [];
+            const btnRecord = document.getElementById('record');
+            const btnReplay = document.getElementById('replay');
+            const btnDownload = document.getElementById('download');
+            let buffer;
+            let mediaRecorder;
+            function startRecord(){
+                debugger;
+                buffer=[];
+                var options={
+                    mimeType: 'video/webm;codecs=vp8',
+                    videoBitsPerSecond: 80000,
+                    video: {
+                        width: 1920,   
+                        height: 1080,  
+                        frameRate: 40  
+                    }
+                }
+                if(! MediaRecorder.isTypeSupported(options.mimeType)){
+                    console.error(`${options.mimeType} is not supported`);
+                    return;
+                }
+                try{
+                        mediaRecorder = new MediaRecorder(video_play.captureStream(),options);
+                    window.s=mediaRecorder;
+                }catch(error){
+                    console.error('failed to create mediaRecorder:',error)
+                    return;
+                }
+                mediaRecorder.ondataavailable= handleDataAvailable;
+                mediaRecorder.start();
+            }
+            function stopRecord(){
+                mediaRecorder.stop()
+            }
+
+            function handleDataAvailable(e){
+                if(e&&e.data&&e.data.size>0){
+                    buffer.push(e.data)
+                }
+            }
+
+            btnRecord.onclick = ()=> {
+            if(btnRecord.textContent==="start record"){
+                startRecord();
+                btnRecord.textContent = "stop record"
+                btnReplay.disabled = true
+                btnDownload.disabled=true;
+            }else{
+                btnRecord.textContent = "start record"
+                btnReplay.disabled = false
+                btnDownload.disabled=false;
+            }
+            }
+            btnDownload.onclick=()=>{
+                var blob =new Blob(buffer,{type:'video/mp4'});
+                var url=window.URL.createObjectURL(blob);
+                var a=document.createElement('a');
+                a.href=url;
+                a.style.display='none';
+                a.download='test.mp4'
+                a.click()
+            }
+
+            btnReplay.onclick=()=>{
+                var blob =new Blob(buffer,{type:'video/mp4'});
+                replay_video.src=window.URL.createObjectURL(blob);
+                replay_video.srcObject=null;
+                replay_video.controls=true;
+                replay_video.play();
+            }
+        </script>
+         <script>
+            const url = './videoplayback.webm'; // 替换为实际视频的URL
+            // const url = 'http://113.31.113.139:7781/rtsp/7782f5ab-ebbe-4eb1-ae45-af1085643655.mp4'; // 替换为实际视频的URL
+            var videoBlob;
+            fetch(url)
+              .then(response => response.blob())
+              .then(blob => {
+                console.log(blob,'blob')
+                videoBlob = URL.createObjectURL(blob);
+                videoElement.src = videoBlob;
+              })
+              .catch(error => {
+                console.error('加载视频失败:', error);
+              });
+              window.a=function(){
+                setTimeout(()=>{
+                    var a=document.createElement('a');
+                    a.href=videoBlob;
+                    a.style.display='none';
+                    a.download='test.mp4'
+                    a.click()
+                },1000)
+              }
+
+                        
+
+          </script>
+</body>
+</html>

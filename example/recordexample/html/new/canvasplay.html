@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+  <body>
+    <canvas id="canvas"></canvas>
+
+    <script>
+      const canvas = document.getElementById('canvas');
+      const ctx = canvas.getContext('2d');
+
+      // 创建 video 元素
+      const video = document.createElement('video');
+      video.src = './record.mp4';
+      video.autoplay = true;
+      video.controls = true;
+      // 在视频加载完成后将视频绘制到 Canvas 上
+      video.addEventListener('loadedmetadata', function() {
+        canvas.width = video.videoWidth;
+        canvas.height = video.videoHeight;
+
+        // 定时绘制视频帧到 Canvas
+        setInterval(function() {
+          ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+        }, 16);
+      });
+    </script>
+  </body>
+</html>

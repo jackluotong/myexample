@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./flv.js"></script>
+</head>
+<body>
+    <div>
+        <video id="videoElement" autoplay></video>
+        <button id="startButton">开始录制</button>
+        <button id="stopButton">停止录制</button>
+        <button id="downButton">下载视频</button>
+    </div>
+    <script>
+        // 初始化 flv.js
+if (flvjs.isSupported()) {
+  const videoElement = document.getElementById('videoElement');
+  const startButton = document.getElementById('startButton');
+  const stopButton = document.getElementById('stopButton');
+  const downButton = document.getElementById('downButton');
+
+  // 创建 FLV 播放器
+  const flvPlayer = flvjs.createPlayer({
+    type: 'flv',
+    url: 'http://113.31.113.139:5581/rtsp/99e23bba-4797-4846-88d1-64f7b1bc0a5d.flv'
+  });
+  flvPlayer.attachMediaElement(videoElement);
+  flvPlayer.load();
+
+  // 创建 MediaRecorder
+  let mediaRecorder;
+  let recordedChunks = [];
+  startButton.addEventListener('click', startRecording);
+  stopButton.addEventListener('click', stopRecording);
+  downButton.addEventListener('click', downRecording);
+
+  function startRecording() {
+    recordedChunks = [];
+    const capStream = videoElement.captureStream();
+    let stream=new MediaStream()
+    if(videoElement.muted||!videoElement.volume){
+        capStream.getVideoTracks().map(track=>stream.addTrack(track));
+    }else{
+        capStream.getTracks().map(track=>stream.addTrack(track));
+    }
+    console.log(stream,'stream')
+    mediaRecorder = new MediaRecorder(stream, { mimeType: 'video/webm' });
+    mediaRecorder.start();
+    mediaRecorder.ondataavailable = handleDataAvailable;
+  }
+
+  function stopRecording() {
+    mediaRecorder.stop();
+    
+  }
+  function downRecording(){
+    saveRecordedVideo();
+  }
+  function handleDataAvailable(event) {
+    if (event.data.size > 0) {
+        console.log(event)
+      recordedChunks.push(event.data);
+    }
+  }
+
+  // 保存录制的视频
+  function saveRecordedVideo() {
+    const blob = new Blob(recordedChunks, { type: 'video/mp4' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'recorded-video.mp4';
+    a.click();
+  }
+} else {
+  console.error('FLV.js is not supported');
+}
+
+    </script>
+</body>
+</html>

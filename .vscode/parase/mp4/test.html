@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <script>
+        function parseMP4Header(arrayBuffer) {
+        const dv = new DataView(arrayBuffer);
+
+        // 检查文件标识符
+        const fileType = dv.getString(4, 0);
+        if (fileType !== 'ftyp') {
+            throw new Error('Invalid MP4 file');
+        }
+
+        // 获取头部信息
+        const header = {
+            fileType: fileType,
+            majorBrand: dv.getString(4, 8),
+            minorVersion: dv.getUint32(12),
+            compatibleBrands: [],
+        };
+
+        // 获取兼容品牌列表
+        let offset = 16;
+        while (offset < dv.byteLength) {
+            const brand = dv.getString(4, offset);
+            header.compatibleBrands.push(brand);
+            offset += 4;
+        }
+
+        return header;
+        }
+
+        // 示例用法
+        fetch('../assets/record.mp4')
+        .then(response => {
+            console.log(response)
+            response.arrayBuffer()
+        })
+        .then(arrayBuffer => {
+            const reader = new FileReader('../assets/record.mp4');
+            reader.onload = function (event) {
+                const buffer = event.target.result;
+                const dataView = new DataView(buffer);
+                console.log(arrayBuffer)
+                const header = parseMP4Header(dataView);
+                console.log(header);
+            }
+        })
+        .catch(error => {
+            console.error(error);
+        });
+        DataView.prototype.getString = function(length, offset) {
+            let result = '';
+            for (let i = offset; i < offset + length; i++) {
+                result += String.fromCharCode(this.getUint8(i));
+            }
+            return result;
+            };
+
+            DataView.prototype.getUint32 = function(offset) {
+            return (
+                (this.getUint8(offset) << 24) |
+                (this.getUint8(offset + 1) << 16) |
+                (this.getUint8(offset + 2) << 8) |
+                this.getUint8(offset + 3)
+            );
+            };
+
+    </script>
+</body>
+</html>

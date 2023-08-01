@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <style>
+            .wrapper {
+                width: 600px;
+                height: 600px;
+                background-color: aqua;
+                position: relative;
+                left: 200px;
+                top: 200px;
+            }
+            #image {
+                width: 200px;
+                transition: all 0.3s ease-in-out;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="wrapper">
+            <img id="image" src="./test.png" alt="Image">
+        </div>
+        <script>
+            var image = document.getElementById('image');
+            var scale = 1;
+
+            function zoomImage(event) {
+                event.preventDefault();
+                var delta = event.deltaY || event.detail || event.wheelDelta;
+
+                // 根据滚轮方向调整缩放比例
+                if (delta > 0) {
+                    scale -= 0.1;
+                } else {
+                    scale += 0.1;
+                }
+
+                // 限制缩放范围在 0.1 到 2 之间
+                scale = Math.min(Math.max(0.1, scale), 12);
+
+                // 应用缩放效果
+                image.style.transform = 'scale(' + scale + ')';
+            }
+
+            // 添加滚轮事件监听器
+            if ('onwheel' in document) { // 支持标准滚轮事件
+                document.addEventListener('wheel', zoomImage);
+            } else if ('onmousewheel' in document) { // 支持非标准滚轮事件（适用于旧版浏览器）
+                document.addEventListener('mousewheel', zoomImage);
+            } else { // 支持非标准滚轮事件（适用于 Firefox）
+                document.addEventListener('DOMMouseScroll', zoomImage);
+            }
+        </script>
+    </body>
+</html>

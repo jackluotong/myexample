@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Play Audio Using Audio Object</title>
+</head>
+<body>
+  <!-- Add a button to start playing the audio -->
+  <button onclick="startPlay()">Play Audio</button>
+
+  <script>
+    let audio = new Audio('./test.mp3');
+
+    function startPlay() {
+      // Play the audio using the Audio object's play() method
+      audio.play();
+    }
+  </script>
+</body>
+</html>

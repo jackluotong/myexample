@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Detect Audio Playback</title>
+</head>
+<body>
+    <button onclick="initializeAudio()">Start Audio Processing</button>
+  <script>
+            // Create an AudioContext
+        const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        function initializeAudio() {
+        // Check if an AudioContext is already created and resume if needed
+            if (audioContext && audioContext.state === 'suspended') {
+                audioContext.resume().then(() => {
+                console.log('AudioContext has been resumed.');
+                // You can perform audio processing here once the context is resumed
+                }).catch((error) => {
+                console.error('Failed to resume AudioContext:', error);
+                });
+            } else {
+                // Create a new AudioContext on the first user gesture
+                audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                console.log('AudioContext has been created.');
+                // You can perform audio processing here with the newly created context
+            }
+        }
+    
+
+    // Function to check for audio playback
+    function checkAudioPlayback() {
+        
+      audioContext.resume().then(() => {
+        // AudioContext is now ready
+
+        // Create an analyzer node to analyze audio
+        const analyzer = audioContext.createAnalyser();
+        analyzer.fftSize = 256;
+
+        // Create a buffer to hold the frequency data
+        const bufferLength = analyzer.frequencyBinCount;
+        const dataArray = new Uint8Array(bufferLength);
+
+        // Connect the analyzer to the destination (e.g., speakers)
+        analyzer.connect(audioContext.destination);
+
+        // Get audio data from the analyzer
+        analyzer.getByteFrequencyData(dataArray);
+
+        // Check if there is any audio data present
+        let hasAudioData = dataArray.some(value => value > 0);
+
+        if (hasAudioData) {
+          console.log('Webpage is playing audio.');
+        } else {
+          console.log('Webpage is not playing audio.');
+        }
+      });
+    }
+
+    // Call the function when needed to check audio playback
+    checkAudioPlayback();
+  </script>
+</body>
+</html>

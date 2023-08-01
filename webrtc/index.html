@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        var configuration = { iceServers: [
+        {urls: "stun:106.15.9.228:3478"},
+        {
+            urls: "turn:106.15.9.228:3478",
+            username: 'lt',
+            credential: '123456',
+        }]
+        };
+
+        var pc = new RTCPeerConnection(configuration);
+        console.log(pc)
+        pc.onicecandidate=function(e){
+            console.log(e)
+        }
+    </script>
+</body>
+</html>

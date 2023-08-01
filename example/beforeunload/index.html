@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+   <script>
+        window.addEventListener('beforeunload', function (event) {
+  event.preventDefault();
+  event.returnValue = ''; // 必须设置一个空字符串，否则某些浏览器会显示默认的提示消息
+
+  // 自定义弹框逻辑
+  const confirmationMessage = '确定要离开吗？';
+
+  // 创建自定义弹框
+  const dialog = document.createElement('div');
+  dialog.textContent = confirmationMessage;
+  dialog.style.position = 'fixed';
+  dialog.style.top = '50%';
+  dialog.style.left = '50%';
+  dialog.style.transform = 'translate(-50%, -50%)';
+  dialog.style.backgroundColor = 'white';
+  dialog.style.padding = '20px';
+  dialog.style.border = '1px solid black';
+
+  // 创建“取消”按钮
+  const cancelButton = document.createElement('button');
+  cancelButton.textContent = '取消';
+  cancelButton.addEventListener('click', function () {
+    // 关闭弹框
+    document.body.removeChild(dialog);
+  });
+
+  // 创建“确定”按钮
+  const confirmButton = document.createElement('button');
+  confirmButton.textContent = '确定';
+  confirmButton.addEventListener('click', function () {
+    // 执行离开操作
+    // ...
+
+    // 关闭弹框
+    document.body.removeChild(dialog);
+  });
+
+  // 将按钮添加到弹框中
+  dialog.appendChild(cancelButton);
+  dialog.appendChild(confirmButton);
+
+  // 将弹框添加到页面中
+  document.body.appendChild(dialog);
+});
+
+   </script>
+</body>
+</html>

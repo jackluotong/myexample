@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        let mediaRecorder = null;
+        let mediaStream = null;
+        let buffer;
+        function startRecording(audioStream) {
+            mediaStream = audioStream;
+            mediaRecorder = new MediaRecorder(mediaStream);
+            mediaRecorder.addEventListener('dataavailable', handleDataAvailable);
+
+            mediaRecorder.start();
+        }
+        function stopRecording() {
+            mediaRecorder.stop();
+            mediaRecorder.removeEventListener('dataavailable', handleDataAvailable);
+            mediaRecorder = null;
+            mediaStream = null;
+        }
+        function handleDataAvailable(event) {
+            buffer.push(event.data);
+        }
+        
+        function save(){
+            var blob =new Blob(buffer,{type:'video/mp4'});
+            var url=window.URL.createObjectURL(blob);
+            var a=document.createElement('a');
+            a.href=url;
+            a.style.display='none';
+            a.download= `record.mp4`
+            a.click()
+        }
+       
+    </script>
+
+   
+</body>
+</html>

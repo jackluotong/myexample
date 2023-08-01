@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    #canvas {
+      border: 2px dashed red;
+      cursor: crosshair;
+    }
+  </style>
+</head>
+<body>
+  <button id="startSharingBtn">Start Sharing</button>
+  <canvas id="canvas"></canvas>
+
+  <script>
+    const startSharingBtn = document.getElementById('startSharingBtn');
+    const canvas = document.getElementById('canvas');
+    const ctx = canvas.getContext('2d');
+    let startX, startY, endX, endY;
+    let mediaStream;
+    let isDrawing = false;
+
+    startSharingBtn.addEventListener('click', startSharing);
+    canvas.addEventListener('mousedown', handleMouseDown);
+    canvas.addEventListener('mousemove', handleMouseMove);
+    canvas.addEventListener('mouseup', handleMouseUp);
+
+    function startSharing() {
+      navigator.mediaDevices.getDisplayMedia({ video: true })
+        .then(function (stream) {
+          mediaStream = stream;
+          const videoTrack = stream.getVideoTracks()[0];
+
+          // 在 Canvas 上渲染屏幕共享的视频流
+          const videoElement = document.createElement('video');
+          videoElement.srcObject = new MediaStream([videoTrack]);
+          videoElement.onloadedmetadata = function () {
+            canvas.width = videoElement.videoWidth;
+            canvas.height = videoElement.videoHeight;
+            videoElement.play();
+            drawVideoFrame(videoElement);
+          };
+          document.body.appendChild(videoElement);
+        })
+        .catch(function (error) {
+          // 处理错误情况
+          console.error('Error accessing screen media:', error);
+        });
+    }
+
+    function drawVideoFrame(videoElement) {
+      ctx.drawImage(videoElement, 0, 0, canvas.width, canvas.height);
+      if (isDrawing) {
+        ctx.strokeStyle = 'red';
+        ctx.lineWidth = 2;
+        ctx.strokeRect(startX, startY, endX - startX, endY - startY);
+      }
+      requestAnimationFrame(() => drawVideoFrame(videoElement));
+    }
+
+    function handleMouseDown(event) {
+      startX = event.offsetX;
+      startY = event.offsetY;
+      isDrawing = true;
+    }
+
+    function handleMouseMove(event) {
+      if (!isDrawing) return;
+      endX = event.offsetX;
+      endY = event.offsetY;
+    }
+
+    function handleMouseUp(event) {
+      isDrawing = false;
+      endX = event.offsetX;
+      endY = event.offsetY;
+
+      // 停止屏幕共享并使用选定的区域
+      stopSharingAndCapture(startX, startY, endX, endY);
+    }
+
+    function stopSharingAndCapture(startX, startY, endX, endY) {
+      // 停止屏幕共享
+      mediaStream.getTracks().forEach(function (track) {
+        track.stop();
+      });
+
+      // 使用选定的区域进行处理或共享
+      console.log('Selected region:', startX, startY, endX, endY);
+    }
+  </script>
+</body>
+</html>

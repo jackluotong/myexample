@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div>
+        <div class="video-container">
+            <!-- <video src=""></video> -->
+        </div>
+        <button onclick="add">+</button>
+        <button onclick="del">-</button>
+    </div>
+    <script>
+        let con=document.getElementsByClassName('video-container')[0];
+        function add(){
+            console.log(1)
+            let vid=document.createElement('video');
+            video.controls = true; // 显示控制条
+            video.autoplay = true; // 自动播放
+            con.appendChild(vid);
+        }
+        function del(){
+            console.log(2)
+        }
+        window.onload=function(){
+            con.style.height='800px';
+            con.style.width='800px';
+            con.style.backgroundColor='pink';
+        }
+        const observer = new MutationObserver((mutationsList) => {
+        for (const mutation of mutationsList) {
+            if (mutation.type === 'childList') {
+            for (const addedNode of mutation.addedNodes) {
+                if (addedNode instanceof HTMLVideoElement) {
+                console.log('Video元素已创建:', addedNode);
+                // 执行你的逻辑操作
+                }
+            }
+            
+            for (const removedNode of mutation.removedNodes) {
+                if (removedNode instanceof HTMLVideoElement) {
+                console.log('Video元素已销毁:', removedNode);
+                // 执行你的逻辑操作
+                }
+            }
+            }
+        }
+        });
+
+        const config = { childList: true, subtree: true };
+
+        // 将观察器目标节点限定为包含video元素的特定父节点
+        const targetNode = con;
+        observer.observe(targetNode, config);
+
+    </script>
+</body>
+</html>

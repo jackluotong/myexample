@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+    </head>
+    <body>
+        <video src="" id="videoElement"></video>
+        <button></button>
+        <script>
+            let mediaRecorder = null;
+            let recordedChunks = [];
+            let audioContext = null;
+
+            // Start recording video and audio
+            function startRecording() {
+                try {
+                    const videoElement = document.getElementById('videoElement');
+                    const stream = videoElement.captureStream();
+                    mediaRecorder = new MediaRecorder(stream);
+
+                    mediaRecorder.ondataavailable = (event) => {
+                        if (event.data.size > 0) {
+                            recordedChunks.push(event.data);
+                        }
+                    };
+
+                    mediaRecorder.start();
+                } catch (error) {
+                    console.error('Error starting media recorder:', error);
+                }
+            }
+
+            // Stop recording and extract audio data
+            function stopRecording() {
+                mediaRecorder.stop();
+                mediaRecorder = null;
+
+                // Combine the recorded chunks into a single Blob
+                const audioBlob = new Blob(recordedChunks, {type: 'audio/webm'});
+
+                // Reset recordedChunks array
+                recordedChunks = [];
+
+                // Analyze audio data using Web Audio API
+                analyzeAudioData(audioBlob);
+            }
+
+            // Analyze audio data using Web Audio API
+            function analyzeAudioData(audioBlob) {
+                const audioReader = new FileReader();
+                audioReader.onload = () => {
+                    const audioData = audioReader.result;
+
+                    // Create an AudioBuffer from the audio data
+                    audioContext.decodeAudioData(audioData, (buffer) => { // You can now work with the audio buffer (e.g., analyze, process, etc.)
+                        console.log('Audio data:', buffer);
+                    });
+                };
+
+                audioReader.readAsArrayBuffer(audioBlob);
+            }
+        </script>
+    </body>
+</html>

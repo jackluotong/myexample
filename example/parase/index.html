@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Video</title>
+    <style>
+        body{
+            max-width: 90%;
+        }
+        #hex{
+            background-color: #acf5ff;
+            width: 40%;
+            float: left;
+        }
+        #string{
+            background-color: #ffcabf;
+            width: 40%;
+            float: right;
+            word-wrap: break-word;
+        }
+
+    </style>
+</head>
+<body>
+<input type="file" id="file">
+<div id="hex">Hex:</div>
+<div id="string">String:</div>
+</body>
+<script>
+    const reader = new FileReader();
+    const fileDom = document.getElementById('file');
+    fileDom.addEventListener('change', event=>{
+        const file = event.target.files[0];
+
+            // console.log(file);
+            reader.readAsArrayBuffer(file);
+            reader.onload = function () {
+                console.log(reader.result);
+                const view = new DataView(reader.result);
+                let arr = [];
+                if (String.fromCharCode(view.getInt8(0)).toLowerCase() == 'f' &&
+                    String.fromCharCode(view.getInt8(1)).toLowerCase() == 'l' &&
+                    String.fromCharCode(view.getInt8(2)).toLowerCase() == 'v' ) {
+
+                    console.log(view.getUint8(0).toString(16));
+                    for (let i = 0, tmp = ''; i < view.byteLength; i++){
+                        let str = view.getInt8(i).toString(16);
+                        str = str.length < 2 ? '0x0' + str : '0x' + str;
+                        tmp += str + ' ';
+                        if (i < 9){
+                            if (i == 8) {
+                                tmp = 'Header:<br>' + tmp;
+                                arr.push(tmp);
+                                tmp = '';
+                                arr.push('Flv Body: ');
+                            }
+                        }else if(i >= 9) {
+                            if (i%16 == 0){
+                                // console.log(view.getInt8(i+6),view.getInt8(i+7),view.getInt8(i+8));
+                                arr.push(tmp);
+                                tmp = '';
+                            }
+                        }
+                    }
+                }
+
+                document.getElementById('hex').innerHTML = arr.join("<br />");
+
+                reader.readAsBinaryString(file);
+                reader.onload = function () {
+                    document.getElementById('string').innerHTML = reader.result;
+                }
+            }
+    });
+</script>
+</html>

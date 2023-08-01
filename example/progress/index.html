@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>WebM进度条示例</title>
+        <style>
+            #video-container {
+                position: relative;
+                width: 640px; /* 设置视频容器的宽度 */
+                overflow: hidden;
+            }
+
+            #progress-bar {
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                width: 0;
+                height: 4px; /* 设置进度条的高度 */
+                background-color: #007bff; /* 设置进度条的颜色 */
+                cursor: pointer; /* 添加鼠标指针，表示进度条可交互 */
+            }
+
+            /* 添加以下样式隐藏视频 */
+            #video {
+                position: absolute;
+                top: -9999px;
+                left: -9999px;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="video-container">
+            <video
+                id="video" controls>
+                <!-- 添加本地下载的视频路径 -->
+                <source
+                src="./testvideo.mp4" type="video/webm">
+            <!-- 添加其他视频格式的源（例如MP4）作为备用 -->
+            </video>
+            <div id="progress-bar"></div>
+        </div>
+        <script>
+            // 获取元素
+            const video = document.getElementById('video');
+            const progressBar = document.getElementById('progress-bar');
+
+            // 监听视频的加载事件
+            video.addEventListener('loadedmetadata', function () { // 设置进度条的宽度为0
+                progressBar.style.width = '0%';
+            });
+
+            // 监听视频的时间更新事件
+            video.addEventListener('timeupdate', function () { // 计算当前视频播放时间占总时长的百分比
+                const progress = (video.currentTime / video.duration) * 100;
+                // 更新进度条的宽度
+                progressBar.style.width = progress + '%';
+            });
+
+            // 监听进度条的点击事件，实现拖动功能
+            progressBar.addEventListener('click', function (e) {
+                const progressBarRect = progressBar.getBoundingClientRect();
+                const clickPosition = e.clientX - progressBarRect.left;
+                const progress = (clickPosition / progressBarRect.width) * 100;
+                // 设置视频当前播放时间为对应的进度
+                video.currentTime = (progress / 100) * video.duration;
+            });
+        </script>
+    </body>
+</html>

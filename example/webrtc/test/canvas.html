@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    #canvas {
+      border: 2px dashed red;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="canvas"></canvas>
+
+  <script>
+    const canvas = document.getElementById('canvas');
+    const ctx = canvas.getContext('2d');
+    let mediaStream;
+
+    navigator.mediaDevices.getDisplayMedia({ video: true })
+      .then(function (stream) {
+        mediaStream = stream;
+        const videoTrack = stream.getVideoTracks()[0];
+
+        // 将屏幕共享的视频流绑定到视频元素
+        const videoElement = document.createElement('video');
+        videoElement.srcObject = new MediaStream([videoTrack]);
+        videoElement.onloadedmetadata = function () {
+          canvas.width = videoElement.videoWidth;
+          canvas.height = videoElement.videoHeight;
+          videoElement.play();
+          drawVideoFrame(videoElement);
+        };
+        document.body.appendChild(videoElement);
+      })
+      .catch(function (error) {
+        // 处理错误情况
+        console.error('Error accessing screen media:', error);
+      });
+
+    function drawVideoFrame(videoElement) {
+      ctx.drawImage(videoElement, 0, 0, canvas.width, canvas.height);
+
+      // 裁剪画面
+      const startX = 100; // 裁剪区域的起始 X 坐标
+      const startY = 100; // 裁剪区域的起始 Y 坐标
+      const width = 200; // 裁剪区域的宽度
+      const height = 200; // 裁剪区域的高度
+      const imageData = ctx.getImageData(startX, startY, width, height);
+
+      // 在控制台输出裁剪区域的像素数据
+      console.log('Cropped image data:', imageData);
+    }
+  </script>
+</body>
+</html>

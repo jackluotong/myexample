@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        window.addEventListener('beforeunload', function (event) {
+            // 设置提示消息
+        const confirmationMessage = '确定要离开吗？';
+        event.returnValue = confirmationMessage;
+
+        // 在其他地方保存状态
+        localStorage.setItem('beforeunloadStatus', 'unconfirmed'); // 初始状态为未确认
+
+        // 添加对窗口关闭的处理
+        window.addEventListener('unload', function () {
+            if (localStorage.getItem('beforeunloadStatus') === 'unconfirmed') {
+            // 用户关闭窗口而未确认，执行相应操作
+            // ...
+            }
+        });
+
+            // 处理确定和取消按钮的点击事件
+        window.addEventListener('beforeunload-confirm', function () {
+            localStorage.setItem('beforeunloadStatus', 'confirmed');
+            // 用户点击了确定按钮，执行相应操作
+            // ...
+            console.log('ok')
+        });
+
+        window.addEventListener('beforeunload-cancel', function () {
+            localStorage.setItem('beforeunloadStatus', 'canceled');
+            // 用户点击了取消按钮，执行相应操作
+            // ...
+            console.log('cancel')
+        });
+        });
+        
+    setTimeout(()=>{
+        window.removeEventListener('beforeunload')
+    },4000)
+    </script>
+</body>
+</html>

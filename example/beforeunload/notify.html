@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        function showCustomNotification(message) {
+            if (Notification.permission === 'granted') {
+                // 创建通知对象
+                const notification = new Notification('自定义弹框', {
+                body: message,
+                icon: 'path/to/icon.png' // 自定义图标路径
+                });
+
+                // 处理通知的点击事件
+                notification.onclick = function () {
+                // 用户点击通知时执行的操作
+                // 可以打开特定页面、执行特定动作等
+                console.log('用户点击了通知');
+                };
+            } else if (Notification.permission !== 'denied') {
+                // 如果用户还未授权通知权限，则请求授权
+                Notification.requestPermission().then(function (permission) {
+                if (permission === 'granted') {
+                    // 在授权后创建通知
+                    showCustomNotification(message);
+                }
+                });
+            }
+            }
+
+            // 调用函数并显示自定义弹框通知
+            showCustomNotification('这是自定义弹框的消息内容');
+
+    </script>
+</body>
+</html>
