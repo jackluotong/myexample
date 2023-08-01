@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>选择存放目录示例</title>
+</head>
+<body>
+  <input type="file" id="fileInput" directory multiple>
+    
+  <script>
+    /**
+     * 浏览器不能直接选择存放位置处于chrome安全原因 
+     */
+    const fileInput = document.getElementById('fileInput');
+    
+    fileInput.addEventListener('change', (event) => {
+      const selectedFiles = event.target.files;
+      // 处理选中的文件
+      console.log(selectedFiles);
+    });
+  </script>
+</body>
+</html>

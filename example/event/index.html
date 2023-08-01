@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+
+  <button onclick="start()">+</button>
+  <button onclick="clearTimer()">-</button>
+  <script>
+    class EventPublisher extends EventTarget {
+      subscribe(event, callback) {
+        this.addEventListener(event, callback);
+      }
+
+      unsubscribe(event, callback) {
+        this.removeEventListener(event, callback);
+      }
+
+      publish(event, data) {
+        const customEvent = new CustomEvent(event, { detail: data });
+        console.log(customEvent,'luo');
+        this.dispatchEvent(customEvent);
+      }
+    }
+
+    // 创建一个事件发布订阅对象
+    const eventPublisher = new EventPublisher();
+
+    // 创建订阅者1
+    function subscriber1(event) {
+      console.log('Subscriber 1 received:', event.detail);
+    }
+
+    // 创建订阅者2
+    function subscriber2(event) {
+      console.log('Subscriber 2 received:', event.detail);
+    }
+
+    // 订阅事件
+    eventPublisher.subscribe('event1', subscriber1);
+    eventPublisher.subscribe('event1', subscriber2);
+
+    // 发布事件
+    eventPublisher.publish('event1', { message: 'Hello World' });
+    this.timer=null;
+  function start(){
+    this.recordingStatus=true;
+    this.recordedSec=0;
+    if(this.recordingStatus){
+          clearTimer();
+          this.timer=setInterval(()=>{
+            this.recordedSec++;
+            console.log(this.recordedSec)
+          },1000)
+        }
+    }
+  function clearTimer(){
+      if(this.timer){
+        this.timer=null;
+        clearInterval(this.timer);
+      }
+    }
+
+  // window.s=start()
+  // window.c=clearTimer(this.timer);
+  </script>
+</body>
+</html>

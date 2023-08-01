@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        let canvas = document.getElementById('canvas');
+      const ctx = canvas.getContext('2d');
+      const image = new Image();
+      image.src = this.src;
+      event.preventDefault();
+      var delta = event.deltaY || event.detail || event.wheelDelta;
+      if (delta > 0) {
+        this.scale -= 0.1;
+      } else {
+        this.scale += 0.1;
+      }
+      this.scale = Math.min(Math.max(0.1, this.scale), 2);
+      canvas.style.transform = 'scale(' + this.scale + ')';
+      image.onload = function () {
+        let posX = 0;
+        let posY = 0;
+        function draw() {
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+          ctx.drawImage(image, posX, posY, image.width, image.height);
+        }
+        draw();
+        let startX = 0;
+        let startY = 0;
+        let isDragging = false;
+        canvas.addEventListener('mousedown', function (e) {
+          startX = e.clientX;
+          startY = e.clientY;
+          isDragging = true;
+        });
+        canvas.addEventListener('mousemove', function (e) {
+          if (isDragging) {
+            const moveX = e.clientX - startX;
+            const moveY = e.clientY - startY;
+            posX += moveX;
+            posY += moveY;
+            draw();
+            startX = e.clientX;
+            startY = e.clientY;
+          }
+        });
+        canvas.addEventListener('mouseup', function () {
+          isDragging = false;
+        });
+      };
+    </script>
+</body>
+</html>

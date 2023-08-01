@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    #overlay {
+      position: absolute;
+      border: 2px dashed red;
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body>
+  <div id="overlay"></div>
+
+  <script>
+    const overlay = document.getElementById('overlay');
+    let startX, startY, endX, endY;
+
+    overlay.addEventListener('mousedown', handleMouseDown);
+    overlay.addEventListener('mousemove', handleMouseMove);
+    overlay.addEventListener('mouseup', handleMouseUp);
+
+    function handleMouseDown(event) {
+      startX = event.clientX;
+      startY = event.clientY;
+    }
+
+    function handleMouseMove(event) {
+      if (!startX || !startY) return;
+
+      const rect = overlay.getBoundingClientRect();
+      const offsetX = event.clientX - rect.left;
+      const offsetY = event.clientY - rect.top;
+
+      overlay.style.left = Math.min(startX, offsetX) + 'px';
+      overlay.style.top = Math.min(startY, offsetY) + 'px';
+      overlay.style.width = Math.abs(offsetX - startX) + 'px';
+      overlay.style.height = Math.abs(offsetY - startY) + 'px';
+    }
+
+    function handleMouseUp(event) {
+      endX = event.clientX;
+      endY = event.clientY;
+
+      // 停止屏幕共享并使用选定的区域
+      stopSharingAndCapture(startX, startY, endX, endY);
+    }
+
+    function stopSharingAndCapture(startX, startY, endX, endY) {
+      // 停止屏幕共享
+      // ...
+
+      // 使用选定的区域进行处理或共享
+      console.log('Selected region:', startX, startY, endX, endY);
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div>
+        <button onclick="startRecord()">startRecord</button>
+        <button onclick="stopSave()">stopSave</button>
+    </div>
+    <script>
+        let buffer=[],
+        mediaRecorder=null;
+        const constraints={
+            video:{
+                    // width: { exact: 800 }, // 指定宽度为800像素
+                    // height: { exact: 600 }, // 指定高度为600像素
+                    left: 100, // 指定捕获区域左边距为100像素
+                    top: 100 // 指定捕获区域上边距为100像素
+                    },
+            audio:true,
+            }
+        function startRecord(){
+            let stream=navigator.mediaDevices.getDisplayMedia(constraints);
+            stream.then(s_=>{
+                if(s_){
+                    window.stream=s_;
+                    let video=document.createElement('video');
+                    video.srcObject=s_;
+                    video.controls=true;
+                    document.body.appendChild(video);
+                    mediaRecorder = new MediaRecorder(window.stream);
+                    mediaRecorder.start();
+                    buffer = [];
+                    mediaRecorder.ondataavailable = handleDataAvailable;
+                    mediaRecorder.onstop = handleSaveData;
+                }
+            });
+        }
+        function stopSave(){
+            window.stream.getTracks().forEach(function (track) {
+                track.stop();
+            });
+                mediaRecorder.stop();
+        }
+       function handleDataAvailable(e) {
+        if (e && e.data && e.data.size > 0) {
+            buffer.push(e.data);
+        }
+        }
+    function handleSaveData() {
+      (function save() {
+        var blob = new Blob(buffer, { type: 'video/mp4' });
+        var url = window.URL.createObjectURL(blob);
+        var a = document.createElement('a');
+        a.href = url;
+        a.style.display = 'none';
+        a.download = 'test.mp4'
+        a.click();
+      }.bind(this)());
+    }
+    </script>
+</body>
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+    </head>
+    <body>
+        <script>
+            /**
+         * @author luotong
+         * @description wasm test
+         * @param {string} path wasm 
+         * @param {Object} imports delivery wasm 
+         */
+            function loadWasm(path = './first.wasm') {
+                return fetch(path).then(r => r.arrayBuffer()).then(WebAssembly.instantiate).then(module => {
+                    const instance = module.instance;
+                    const result = instance.exports.add(5, 3)
+                    console.log(module, result)
+
+                }).catch(e => {
+                    console.log(e)
+                })
+
+            }
+            loadWasm()
+            // emcc first.c -Os -s WASM=1 -s SIDE_MODULE=1 -o first.wasm
+            function fetchAndInstantiate(url, importObject = {}) {
+                return fetch(url).then(response => response.arrayBuffer()).then(bytes => WebAssembly.instantiate(bytes, importObject)).then(results => results.instance);
+            }
+
+
+            fetchAndInstantiate('./aa.wasm').then(function (instance) { // 调用导出的函数
+                var add = instance.exports.add
+                var square = instance.exports.square
+                console.log('1+1=', add(1, 1))
+                console.log('2*2=', square(2))
+            })
+
+            // emcc -first.c -o first1.wasm
+        </script>
+    </body>
+</html>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+    </head>
+    <body>
+        <script>
+            let mediaRecorder; // 媒体录制器
+            let chunks = [];
+            // 存储录制的数据块
+
+            // 获取屏幕媒体流
+            navigator.mediaDevices.getDisplayMedia({
+                video: {
+                    mediaSource: 'screen'
+                }
+            }).then(stream => { // 创建媒体录制器
+                mediaRecorder = new MediaRecorder(stream);
+
+                // 监听录制数据可用事件
+                mediaRecorder.ondataavailable = (e) => {
+                    chunks.push(e.data);
+                };
+
+                // 监听录制结束事件
+                mediaRecorder.onstop = () => { // 创建录制的 Blob 对象
+                    const blob = new Blob(chunks, {type: 'video/webm'});
+                    chunks = [];
+
+                    // 创建视频元素并播放录制的视频
+                    const videoElement = document.createElement('video');
+                    videoElement.src = URL.createObjectURL(blob);
+                    videoElement.controls = true;
+                    document.body.appendChild(videoElement);
+                };
+
+                // 开始录制
+                mediaRecorder.start();
+            }).catch(error => {
+                console.error('获取屏幕媒体流失败:', error);
+            });
+
+            // 停止录制
+            function stopRecording() {
+                if (mediaRecorder && mediaRecorder.state !== 'inactive') {
+                    mediaRecorder.stop();
+                }
+            }
+        </script>
+
+    </body>
+</html>

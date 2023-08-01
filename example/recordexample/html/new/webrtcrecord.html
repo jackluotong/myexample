@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <button onclick="startScreenRecording()">sharing</button>
+    <button onclick="stop()">stop</button>
+    <script>
+        let mediaRecorder;
+        async function startScreenRecording() {
+            try {
+                const stream = await navigator.mediaDevices.getDisplayMedia({ video: true });
+                // 创建 MediaRecorder 对象
+                mediaRecorder = new MediaRecorder(stream);
+
+                // 存储录制的数据块
+                const chunks = [];
+
+                // 监听数据可用事件
+                mediaRecorder.addEventListener('dataavailable', (event) => {
+                if (event.data.size > 0) {
+                    chunks.push(event.data);
+                }
+                });
+
+                // 监听录制结束事件
+                mediaRecorder.addEventListener('stop', () => {
+                // 创建 Blob 对象
+                const recordedBlob = new Blob(chunks, { type: mediaRecorder.mimeType });
+
+                // 创建下载链接
+                const downloadLink = document.createElement('a');
+                downloadLink.href = URL.createObjectURL(recordedBlob);
+                downloadLink.download = 'screen-recording.webm';
+                downloadLink.click();
+                });
+
+                // 开始录制
+                mediaRecorder.start();
+
+                // 录制一定时长后停止录制（例如，10秒）
+                } 
+                catch (error) {
+                    console.error('无法录制屏幕流:', error);
+                }
+            }
+            function stop(){
+                mediaRecorder.stop();
+            }
+    </script>
+
+</body>
+</html>

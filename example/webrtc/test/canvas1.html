@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    #canvas {
+      border: 2px dashed red;
+      cursor: crosshair;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="canvas"></canvas>
+
+  <script>
+    const canvas = document.getElementById('canvas');
+    const ctx = canvas.getContext('2d');
+    let startX, startY, endX, endY;
+    let isDrawing = false;
+    let mediaStream;
+    let videoTrack;
+    let audioTrack;
+
+    navigator.mediaDevices.getDisplayMedia({ video: true, audio: true })
+      .then(function (stream) {
+        mediaStream = stream;
+        videoTrack = stream.getVideoTracks()[0];
+        audioTrack = stream.getAudioTracks()[0];
+
+        // 将屏幕共享的视频流绑定到视频元素
+        const videoElement = document.createElement('video');
+        videoElement.srcObject = new MediaStream([videoTrack]);
+        videoElement.onloadedmetadata = function () {
+          canvas.width = videoElement.videoWidth;
+          canvas.height = videoElement.videoHeight;
+          videoElement.play();
+          drawVideoFrame(videoElement);
+        };
+        document.body.appendChild(videoElement);
+      })
+      .catch(function (error) {
+        // 处理错误情况
+        console.error('Error accessing screen media:', error);
+      });
+
+    function drawVideoFrame(videoElement) {
+      ctx.drawImage(videoElement, 0, 0, canvas.width, canvas.height);
+
+      // 绘制裁剪框
+      if (isDrawing) {
+        ctx.strokeStyle = 'red';
+        ctx.lineWidth = 2;
+        ctx.strokeRect(startX, startY, endX - startX, endY - startY);
+      }
+
+      requestAnimationFrame(() => drawVideoFrame(videoElement));
+    }
+
+    canvas.addEventListener('mousedown', handleMouseDown);
+    canvas.addEventListener('mousemove', handleMouseMove);
+    canvas.addEventListener('mouseup', handleMouseUp);
+
+    function handleMouseDown(event) {
+      startX = event.offsetX;
+      startY = event.offsetY;
+      isDrawing = true;
+    }
+
+    function handleMouseMove(event) {
+      if (!isDrawing) return;
+      endX = event.offsetX;
+      endY = event.offsetY;
+    }
+
+    function handleMouseUp(event) {
+      isDrawing = false;
+      endX = event.offsetX;
+      endY = event.offsetY;
+
+      // 停止屏幕共享
+      mediaStream.getTracks().forEach(function (track) {
+        track.stop();
+      });
+
+      // 裁剪视频
+      const croppedVideoTrack = videoTrack.clone();
+      const croppedAudioTrack = audioTrack.clone();
+      const cropOptions = {
+        x: Math.min(startX, endX),
+        y: Math.min(startY, endY),
+        width: Math.abs(endX - startX),
+        height: Math.abs(endY - startY),
+      };
+      const croppedVideoMediaStream = new MediaStream([croppedVideoTrack, croppedAudioTrack]);
+      const croppedVideoElement = document.createElement('video');
+      croppedVideoElement.srcObject = croppedVideoMediaStream;
+      croppedVideoElement.onloadedmetadata = function () {
+        croppedVideoElement.play();
+      };
+      document.body.appendChild(croppedVideoElement);
+
+      // 在控制台输出裁剪区域的信息
+      console.log('Cropped region:', cropOptions);
+    }
+  </script>
+</body>
+</html>

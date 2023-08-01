@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <script>
+      // 创建 video 元素
+const videoElement = document.createElement('video');
+videoElement.src = 'path/to/video.mp4';
+
+// 创建 canvas 元素
+const canvas = document.createElement('canvas');
+const ctx = canvas.getContext('2d');
+
+// 视频加载完成时的事件监听器
+videoElement.addEventListener('loadedmetadata', () => {
+  // 设置 Canvas 的尺寸与视频相同
+  canvas.width = videoElement.videoWidth;
+  canvas.height = videoElement.videoHeight;
+
+  // 开始播放视频
+  videoElement.play();
+
+  // 定义一个函数，用于检查当前帧是否为黑屏帧
+  function isBlackFrame(frameImageData) {
+    const data = frameImageData.data;
+
+    // 循环遍历每个像素，判断是否为黑色
+    for (let i = 0; i < data.length; i += 4) {
+      const red = data[i];
+      const green = data[i + 1];
+      const blue = data[i + 2];
+
+      // 如果有任何一个像素不是黑色，则当前帧不是黑屏帧
+      if (red !== 0 || green !== 0 || blue !== 0) {
+        return false;
+      }
+    }
+
+    // 所有像素都是黑色，当前帧是黑屏帧
+    return true;
+  }
+
+  // 定义一个函数，用于删除黑屏帧并显示剩余的视频内容
+  function removeBlackFrames() {
+    // 清空 Canvas
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    // 绘制当前视频帧到 Canvas
+    ctx.drawImage(videoElement, 0, 0, canvas.width, canvas.height);
+
+    // 获取当前帧的图像数据
+    const frameImageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+
+    // 检查当前帧是否为黑屏帧
+    if (isBlackFrame(frameImageData)) {
+      // 如果是黑屏帧，则继续播放下一帧
+      videoElement.currentTime += 1 / videoElement.videoFramerate;
+    }
+
+    // 递归调用，继续处理下一帧
+    requestAnimationFrame(removeBlackFrames);
+  }
+
+  // 开始处理视频帧
+  removeBlackFrames();
+});
+
+// 将 Canvas 元素添加到 DOM 中
+document.body.appendChild(canvas);
+
+
+    </script>
+
+    <script>
+        // 创建 video 元素
+const videoElement = document.createElement('video');
+videoElement.src = 'path/to/video.mp4';
+
+// 创建 canvas 元素
+const canvas = document.createElement('canvas');
+const ctx = canvas.getContext('2d');
+
+// 视频加载完成时的事件监听器
+videoElement.addEventListener('loadedmetadata', () => {
+  // 设置 Canvas 的尺寸与视频相同
+  canvas.width = videoElement.videoWidth;
+  canvas.height = videoElement.videoHeight;
+
+  // 开始播放视频
+  videoElement.play();
+
+  // 定义一个函数，用于检查当前帧是否为黑屏帧
+  function isBlackFrame(frameImageData) {
+    const data = frameImageData.data;
+
+    // 循环遍历每个像素，判断是否为黑色
+    for (let i = 0; i < data.length; i += 4) {
+      const red = data[i];
+      const green = data[i + 1];
+      const blue = data[i + 2];
+
+      // 如果有任何一个像素不是黑色，则当前帧不是黑屏帧
+      if (red !== 0 || green !== 0 || blue !== 0) {
+        return false;
+      }
+    }
+
+    // 所有像素都是黑色，当前帧是黑屏帧
+    return true;
+  }
+
+  // 定义一个函数，用于删除黑屏帧并显示剩余的视频内容
+  function removeBlackFrames() {
+    // 清空 Canvas
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    // 绘制当前视频帧到 Canvas
+    ctx.drawImage(videoElement, 0, 0, canvas.width, canvas.height);
+
+    // 获取当前帧的图像数据
+    const frameImageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+
+    // 检查当前帧是否为黑屏帧
+    if (isBlackFrame(frameImageData)) {
+      // 如果是黑屏帧，则继续播放下一帧
+      videoElement.currentTime += 1 / videoElement.videoFramerate;
+    }
+
+    // 递归调用，继续处理下一帧
+    requestAnimationFrame(removeBlackFrames);
+  }
+
+  // 开始处理视频帧
+  removeBlackFrames();
+});
+
+// 将 Canvas 元素添加到 DOM 中
+document.body.appendChild(canvas);
+
+    </script>
+
+    <script>
+        // 创建 video 元素
+            const videoElement = document.createElement('video');
+            videoElement.src = 'path/to/video.mp4';
+
+// 创建 canvas 元素
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+
+            // 创建一个隐藏的链接元素
+            const downloadLink = document.createElement('a');
+            downloadLink.style.display = 'none';
+
+            // 视频加载完成时的事件监听器
+            videoElement.addEventListener('loadedmetadata', () => {
+            // 设置 Canvas 的尺寸与视频相同
+            canvas.width = videoElement.videoWidth;
+            canvas.height = videoElement.videoHeight;
+
+            // 开始播放视频
+            videoElement.play();
+
+            // 定义一个函数，用于检查当前帧是否为黑屏帧
+            function isBlackFrame(frameImageData) {
+                const data = frameImageData.data;
+
+                // 循环遍历每个像素，判断是否为黑色
+                for (let i = 0; i < data.length; i += 4) {
+                const red = data[i];
+                const green = data[i + 1];
+                const blue = data[i + 2];
+
+                // 如果有任何一个像素不是黑色，则当前帧不是黑屏帧
+                if (red !== 0 || green !== 0 || blue !== 0) {
+                    return false;
+                    }
+                }
+
+                // 所有像素都是黑色，当前帧是黑屏帧
+                return true;
+            }
+
+            // 定义一个函数，用于删除黑屏帧并显示剩余的视频内容
+            function removeBlackFrames() {
+                // 清空 Canvas
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                // 绘制当前视频帧到 Canvas
+                ctx.drawImage(videoElement, 0, 0, canvas.width, canvas.height);
+
+                // 获取当前帧的图像数据
+                const frameImageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+
+                // 检查当前帧是否为黑屏帧
+                if (isBlackFrame(frameImageData)) {
+                // 如果是黑屏帧，则继续播放下一帧
+                videoElement.currentTime += 1 / videoElement.videoFramerate;
+                } else {
+                // 如果不是黑屏帧，则在 Canvas 上显示当前帧
+                    ctx.putImageData(frameImageData, 0, 0);
+                }
+
+                // 递归调用，继续处理下一帧
+                requestAnimationFrame(removeBlackFrames);
+            }
+
+            // 定义一个函数，用于将 Canvas 内容进行下载
+            function downloadCanvas() {
+                // 将 Canvas 转换为图片格式（例如 PNG）
+                const dataURL = canvas.toDataURL('image/png');
+
+                // 设置下载链接的 href 属性为 Canvas 图片的 data URL
+                downloadLink.href = dataURL;
+
+                // 设置下载链接的名称
+                downloadLink.download = 'video_frame.png';
+
+                // 模拟点击下载链接
+                downloadLink.click();
+            }
+
+            // 开始处理视频帧
+            removeBlackFrames();
+
+            // 在视频播放完毕后，触发下载事件
+            videoElement.addEventListener('ended', downloadCanvas);
+            });
+
+            // 将 Canvas 元素添加到 DOM 中
+            document.body.appendChild(canvas);
+
+    </script>
+</body>
+</html>

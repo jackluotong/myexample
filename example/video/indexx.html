@@ -1,0 +1,36 @@
+<template>
+    <div>
+      <video ref="myVideo" controls></video>
+    </div>
+  </template>
+  
+  <script>
+  export default {
+    mounted() {
+      // 获取 video 元素
+      const videoElement = this.$refs.myVideo;
+  
+      // 创建 MutationObserver 实例
+      const observer = new MutationObserver(this.handleSrcChange);
+  
+      // 配置观察选项
+      const config = { attributes: true, attributeFilter: ['src'] };
+  
+      // 开始观察 video 元素的属性变化
+      observer.observe(videoElement, config);
+    },
+    methods: {
+      // 处理 src 属性变化的回调函数
+      handleSrcChange(mutationsList) {
+        for (const mutation of mutationsList) {
+          if (mutation.type === 'attributes' && mutation.attributeName === 'src') {
+            const newSrc = mutation.target.getAttribute('src');
+            console.log('Video src changed to:', newSrc);
+            // 在这里可以执行你需要的操作，如重新加载视频、处理新的视频资源等
+          }
+        }
+      }
+    }
+  };
+  </script>
+  

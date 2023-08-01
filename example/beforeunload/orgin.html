@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+
+        window.addEventListener('beforeunload', function (event) {
+            const confirmationMessage = '确定要离开吗？';
+            event.returnValue = confirmationMessage;
+
+            const result = confirm(confirmationMessage);
+            if (result) {
+                // 用户点击了确定，执行离开操作
+                // ...
+            } else {
+                // 用户点击了取消，取消离开操作
+                // ...
+            }
+        });
+
+
+    </script>
+</body>
+</html>

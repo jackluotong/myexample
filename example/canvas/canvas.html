@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    #canvas {
+      border: 1px solid #000;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="canvas" width="400" height="300"></canvas>
+  <button id="startButton">开始录制</button>
+  <button id="stopButton">停止录制</button>
+  <button id="saveButton">保存视频</button>
+  <video id="video" controls ></video>
+
+  <script>
+    var canvas = document.getElementById('canvas');
+    var ctx = canvas.getContext('2d');
+    var images = ['./img2.png', './img3.png','img4.png']; // 替换为你自己的图片路径
+    var currentImageIndex = 0;
+    var isRecording = false;
+    var chunks = [];
+
+    function loadImage() {
+      var image = new Image();
+      image.src = images[currentImageIndex];
+      image.onload = function() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
+
+        if (isRecording) {
+          var frame = canvas.toDataURL('image/webp', 1);
+          var blob = dataURItoBlob(frame);
+          chunks.push(blob);
+        }
+      };
+    }
+
+    function playNextImage() {
+      currentImageIndex++;
+      if (currentImageIndex >= images.length) {
+        currentImageIndex = 0;
+      }
+      loadImage();
+    }
+
+    function startRecording() {
+        console.log(11)
+      if (!isRecording) {
+        isRecording = true;
+        chunks = [];
+
+        if (typeof MediaRecorder.isTypeSupported === 'function' && MediaRecorder.isTypeSupported('video/webm')) {
+          var options = { mimeType: 'video/webm' };
+          mediaRecorder = new MediaRecorder(canvas.captureStream(), options);
+          mediaRecorder.ondataavailable = handleDataAvailable;
+          mediaRecorder.start();
+        } else {
+          console.error('WebM format is not supported in this browser.');
+        }
+      }
+    }
+
+    function stopRecording() {
+      if (isRecording) {
+        isRecording = false;
+        mediaRecorder.stop();
+      }
+    }
+
+    function handleDataAvailable(event) {
+      if (event.data && event.data.size > 0) {
+        chunks.push(event.data);
+      }
+    }
+
+    function saveVideo() {
+      var blob = new Blob(chunks, { type: 'video/webm' });
+      var url = URL.createObjectURL(blob);
+      var video = document.getElementById('video');
+      console.log(blob)
+      video.src = url;
+      video.controls = true;
+    }
+
+    function dataURItoBlob(dataURI) {
+      var byteString = atob(dataURI.split(',')[1]);
+      var mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
+      var ab = new ArrayBuffer(byteString.length);
+      var ia = new Uint8Array(ab);
+      for (var i = 0; i < byteString.length; i++) {
+        ia[i] = byteString.charCodeAt(i);
+      }
+      return new Blob([ab], { type: mimeString });
+    }
+
+    document.getElementById('startButton').addEventListener('click', startRecording);
+    document.getElementById('stopButton').addEventListener('click', function(){
+        stopRecording();
+    });
+    document.getElementById('saveButton').addEventListener('click', function(){
+        saveVideo()
+    });
+
+    // 初始化加载第一张图片
+    loadImage();
+    setInterval(playNextImage, 2000); // 每2秒播放下一张图片
+  </script>
+</body>
+</html>

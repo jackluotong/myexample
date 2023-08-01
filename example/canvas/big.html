@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Draggable Photo</title>
+    <style>
+        #canvas {
+            border: 1px solid #000;
+            cursor: move;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="canvas" width="500" height="500"></canvas>
+
+    <script>
+        // 获取 Canvas 元素和上下文对象
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+
+        // 加载图片
+        const image = new Image();
+        image.src = './img2.png';
+
+        // 图片加载完成后执行
+        image.onload = function() {
+            // 初始位置
+            let posX = 0;
+            let posY = 0;
+
+            // 绘制函数
+            function draw() {
+                // 清除画布
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                // 绘制图片
+                ctx.drawImage(image, posX, posY, image.width, image.height);
+            }
+
+            // 绘制初始状态
+            draw();
+
+            // 记录鼠标按下时的初始位置
+            let startX = 0;
+            let startY = 0;
+
+            // 标记是否正在拖动
+            let isDragging = false;
+
+            // 鼠标按下事件
+            canvas.addEventListener('mousedown', function(e) {
+                startX = e.clientX;
+                startY = e.clientY;
+                isDragging = true;
+            });
+
+            // 鼠标移动事件
+            canvas.addEventListener('mousemove', function(e) {
+                if (isDragging) {
+                    // 计算鼠标移动的距离
+                    const moveX = e.clientX - startX;
+                    const moveY = e.clientY - startY;
+
+                    // 更新图片的位置
+                    posX += moveX;
+                    posY += moveY;
+
+                    // 重新绘制
+                    draw();
+
+                    // 更新初始位置
+                    startX = e.clientX;
+                    startY = e.clientY;
+                }
+            });
+
+            // 鼠标松开事件
+            canvas.addEventListener('mouseup', function() {
+                isDragging = false;
+            });
+        };
+    </script>
+</body>
+</html>

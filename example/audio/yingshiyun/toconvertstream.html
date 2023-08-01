@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Convert Audio to MediaStream</title>
+</head>
+<body>
+  <!-- Add a button to start capturing the audio -->
+  <button onclick="startCapture()">Start Capture</button>
+  <script>
+    let audio = new Audio('./test.mp3');
+
+    async function startCapture() {
+      const mediaStream = await captureMediaStreamFromAudioObject(audio);
+
+      const audioElement = document.createElement('audio');
+      audioElement.srcObject = mediaStream;
+      audioElement.controls = true;
+      document.body.appendChild(audioElement);
+      audioElement.play();
+    }
+
+    async function captureMediaStreamFromAudioObject(audio) {
+      const audioContext = new AudioContext();
+      const mediaStreamDestination = audioContext.createMediaStreamDestination();
+      const mediaStream = mediaStreamDestination.stream;
+
+      const sourceNode = audioContext.createMediaElementSource(audio);
+      sourceNode.connect(mediaStreamDestination);
+      audio.play();
+      console.log(mediaStream,'stream');
+        const video = document.createElement('video');
+        video.srcObject = mediaStream;
+        video.controls = true;
+        video.autoplay=true;
+        document.body.appendChild(video);
+      return mediaStream;
+    }
+  </script>
+</body>
+</html>
