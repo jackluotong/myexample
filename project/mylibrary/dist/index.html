@@ -5,7 +5,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Document</title>
-        <script src="main.c1cf41.js"></script>
+        <script src="main.34dc1d.js"></script>
     </head>
     <body></body>
     <body>
@@ -61,6 +61,59 @@
             // });
 
 
+            // let mediaRecorder;
+            // let recordedChunks = [];
+
+            // const videoElement = document.getElementById('recordedVideo');
+            // const progressBar = document.getElementById('progressBar');
+            // const startButton = document.getElementById('startButton');
+            // const stopButton = document.getElementById('stopButton');
+
+            // const ffmpeg = my.ffmpeg.createFFmpeg({log: true});
+            // console.log(ffmpeg);
+            // startButton.addEventListener('click', async () => {
+            //     await ffmpeg.load();
+
+            //     navigator.mediaDevices.getUserMedia({video: true, audio: false}).then((stream) => {
+            //         mediaRecorder = new MediaRecorder(stream);
+            //         recordedChunks = [];
+            //         videoElement.srcObject = stream;
+
+            //         mediaRecorder.ondataavailable = (event) => {
+            //             if (event.data.size > 0) {
+            //                 recordedChunks.push(event.data);
+            //             }
+            //         };
+
+            //         mediaRecorder.start();
+            //     }).catch((error) => {
+            //         console.error('Error accessing media devices:', error);
+            //     });
+            // });
+
+            // stopButton.addEventListener('click', async () => {
+            //     if (mediaRecorder && mediaRecorder.state !== 'inactive') {
+            //         mediaRecorder.stop();
+            //         mediaRecorder.stream.getTracks().forEach((track) => track.stop());
+
+            //         // Create a Blob from the recorded chunks
+            //         const recordedBlob = new Blob(recordedChunks, {type: 'video/webm'});
+
+            //         // Use ffmpeg.wasm to fix the WebM duration
+            //         await ffmpeg.write('input.webm', recordedBlob);
+            //         await ffmpeg.run('-i', 'input.webm', '-c', 'copy', 'output.webm');
+
+            //         // Read the fixed video as an ArrayBuffer
+            //         const fixedVideoBuffer = await ffmpeg.read('output.webm');
+            //         const fixedVideoBlob = new Blob([fixedVideoBuffer], {type: 'video/webm'});
+
+            //         // Create a URL for the fixed video and set it as the video source
+            //         const fixedVideoURL = URL.createObjectURL(fixedVideoBlob);
+            //         videoElement.src = fixedVideoURL;
+            //     }
+            // });
+
+
             let mediaRecorder;
             let recordedChunks = [];
 
@@ -69,12 +122,12 @@
             const startButton = document.getElementById('startButton');
             const stopButton = document.getElementById('stopButton');
 
-            const ffmpeg = my.createFFmpeg.createFFmpeg({log: true});
+            const ffmpeg = my.ffmpeg.createFFmpeg({log: true});
 
             startButton.addEventListener('click', async () => {
                 await ffmpeg.load();
 
-                navigator.mediaDevices.getUserMedia({video: true, audio: true}).then((stream) => {
+                navigator.mediaDevices.getUserMedia({video: true, audio: false}).then((stream) => {
                     mediaRecorder = new MediaRecorder(stream);
                     recordedChunks = [];
                     videoElement.srcObject = stream;
@@ -99,17 +152,34 @@
                     // Create a Blob from the recorded chunks
                     const recordedBlob = new Blob(recordedChunks, {type: 'video/webm'});
 
-                    // Use ffmpeg.wasm to fix the WebM duration
-                    await ffmpeg.write('input.webm', recordedBlob);
-                    await ffmpeg.run('-i', 'input.webm', '-c', 'copy', 'output.webm');
+                    // Read the recorded video as an ArrayBuffer
+                    const recordedVideoBuffer = await recordedBlob.arrayBuffer();
+                    // Use ffmpeg.wasm to process the WebM video
+                    ffmpeg.FS('writeFile', 'input.webm', new Uint8Array(recordedVideoBuffer));
 
-                    // Read the fixed video as an ArrayBuffer
-                    const fixedVideoBuffer = await ffmpeg.read('output.webm');
-                    const fixedVideoBlob = new Blob([fixedVideoBuffer], {type: 'video/webm'});
+                    // Generate a unique output filename
+                    const outputFileName = `output_${
+                        Date.now()
+                    }.mp4`;
 
-                    // Create a URL for the fixed video and set it as the video source
-                    const fixedVideoURL = URL.createObjectURL(fixedVideoBlob);
-                    videoElement.src = fixedVideoURL;
+                    try {
+                        await ffmpeg.run('-i', 'input.webm', '-y', outputFileName);
+                        console.log(ffmpeg.FS('ls', '/'));
+                    } catch (error) {
+                        console.error('Error processing video:', error);
+                        return;
+                    }
+                    console.log(ffmpeg, 'ffmpeg-run')
+                    // Read the processed video as an ArrayBuffer
+                    const processedVideoBuffer = ffmpeg.FS('readFile', outputFileName);
+                    const processedVideoBlob = new Blob([processedVideoBuffer.buffer], {type: 'video/mp4'});
+
+                    // Create a URL for the processed video and initiate the download
+                    const processedVideoURL = URL.createObjectURL(processedVideoBlob);
+                    const downloadLink = document.createElement('a');
+                    downloadLink.href = processedVideoURL;
+                    downloadLink.download = 'processed_video.mp4';
+                    downloadLink.click();
                 }
             });
         </script>
