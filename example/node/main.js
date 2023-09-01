@@ -1,28 +1,18 @@
 // main.js
 
-import storeErrorInIndexedDB from './src/log/errorLog';
-import MyError from './src/error/index';
-import { getErrorsFromIndexedDB } from './src/log/db';
-
-// 模拟一个可能出错的操作
+import {paddingError} from './src/error/index'
+const testFn=()=>{
 try {
-  
-    const error = {
-        type: 'user',
-        message: 'Division by zero',
-        error: new Error('Division by zero')
-      };
-    await storeErrorInIndexedDB(error);
-  
+    paddingError('TestError',1231,{type:'test',info:{a:1},child:{error:'1'}});
 } catch (error) {
-  console.error('Error:', error);
+  throw paddingError('test error',1231,{type:'test',info:{a:1},child:error});
+  }
 }
-
+testFn();
 async function handleErrors() {
     try {
       const errors = await getErrorsFromIndexedDB(window.db);
       console.log('Stored errors:', errors);
-      console.log(MyError)
 
       const errorsJson = JSON.stringify(errors, null, 2); 
       const blob = new Blob([errorsJson], { type: 'application/json' });
@@ -30,10 +20,11 @@ async function handleErrors() {
       downloadLink.href = URL.createObjectURL(blob);
       downloadLink.download = 'errors.json'; 
       document.body.appendChild(downloadLink);
-      // downloadLink.click();
+      downloadLink.click();
       document.body.removeChild(downloadLink);
+      
     } catch (error) {
       console.error('Error getting errors from IndexedDB:', error);
     }
   }
-  handleErrors();
+  // handleErrors();
