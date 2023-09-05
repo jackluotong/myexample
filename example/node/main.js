@@ -1,6 +1,7 @@
 // main.js
 
-import {paddingError} from './src/error/index'
+import {paddingError} from './src/error/index';
+import {MyTest,deployTest} from './src/log/index';
 const testFn=()=>{
 try {
     paddingError('TestError',1231,{type:'test',info:{a:1},child:{error:'1'}});
@@ -8,7 +9,6 @@ try {
   throw paddingError('test error',1231,{type:'test',info:{a:1},child:error});
   }
 }
-testFn();
 async function handleErrors() {
     try {
       const errors = await getErrorsFromIndexedDB(window.db);
@@ -27,4 +27,18 @@ async function handleErrors() {
       console.error('Error getting errors from IndexedDB:', error);
     }
   }
-  // handleErrors();
+
+
+  
+  function test(msg,info,data){
+    deployTest(msg,info,data);
+  }
+
+let data={
+  age:29,
+  sex:'male',
+  other:{
+    output:['jc','dist']
+  }
+}
+test('this is a test',{name:'william'},data);
