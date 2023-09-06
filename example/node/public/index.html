@@ -8,6 +8,44 @@
     <script src="<%= htmlWebpackPlugin.files.js %>"></script>
 </head>
 <body>
-    <div>example</div>
+    <input type="file" id="videoInput">
+<video id="outputVideo" controls></video>
+
+<script>
+const videoInput = document.getElementById('videoInput');
+const outputVideo = document.getElementById('outputVideo');
+videoInput.addEventListener('change', async () => {
+  const selectedFile = videoInput.files[0];
+  
+  if (selectedFile) {
+    const formData = new FormData();
+    formData.append('file', selectedFile);
+    console.log(formData,'[formData]')
+    try {
+        let myInit = {
+                method: "POST",
+                // headers: {
+                //     "Content-Type": "video/x-matroska",
+                // },
+                // mode: "cors",
+                // cache: "default",
+                body: formData
+            };
+      const response = await fetch('http://127.0.0.1:30001/convert', myInit);
+      console.log(response,'[response]')
+      if (response.ok) {
+        const videoBlob = await response.blob();
+        const videoUrl = URL.createObjectURL(videoBlob);
+        outputVideo.src = videoUrl;
+      } else {
+        console.error('视频转码失败');
+      }
+    } catch (error) {
+      console.error('发生错误:', error);
+    }
+  }
+});
+</script>
+
 </body>
 </html>

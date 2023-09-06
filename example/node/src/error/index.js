@@ -3,12 +3,12 @@ class MyError extends Error {
     constructor(msg,code,data){
         super(msg);
         this.code = code;
-        this.time = new Date().toLocaleString();
+        this.timestamp = new Date().getTime();
         this.handleData(data);
     }
     handleData(data){
         if(data){
-            let properties=['info','type'];
+            let properties=['info','type','child'];
             Object.keys(data).forEach(key=>{
                 if(properties.includes(key)){
                     let v=data[key];
@@ -28,9 +28,10 @@ class MyError extends Error {
     }
 };
 
-const paddingError=(msg,code,data)=>{
+const paddingError=async(msg,code,data)=>{
     let r=new MyError(msg,code,data);
-    leak(r);
+    await leak(r);
+    // window.db.close();
     return r;
 }
 export {
