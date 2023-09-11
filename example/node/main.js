@@ -2,7 +2,8 @@
 
 import {paddingError} from './src/error/index';
 const testFn = async () => {
-    try { // await paddingError('TestError',1231,{type:'test',info:{a:1},child:{error:'1'}});
+    try { 
+        // await paddingError('TestError',1231,{type:'test',info:{a:1},child:{error:'1'}});
         throw new Error("这是一个自定义异常！");
     } catch (error) {
         await paddingError('test error', 1231, {
