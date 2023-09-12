@@ -1,0 +1,34 @@
+[2023-09-12T15:42:58.717] [INFO] default - 服务器已启动，监听端口 30001
+[2023-09-12T15:42:58.720] [INFO] default - F:\mylearn\myexample\example\node\src\node\ffmpeg
+[2023-09-12T15:43:08.762] [ERROR] default - 转码出错 Error: spawn D:startfmpeg-6.0-essentials_buildinfmpeg.exe ENOENT
+    at Process.ChildProcess._handle.onexit (internal/child_process.js:267:19)
+    at onErrorNT (internal/child_process.js:469:16)
+    at processTicksAndRejections (internal/process/task_queues.js:84:21) {
+  errno: 'ENOENT',
+  code: 'ENOENT',
+  syscall: 'spawn D:start\ffmpeg-6.0-essentials_build\bin\ffmpeg.exe',
+  path: 'D:start\ffmpeg-6.0-essentials_build\bin\ffmpeg.exe',
+  spawnargs: [ '-formats' ]
+}
+[2023-09-12T15:44:15.697] [INFO] default - 服务器已启动，监听端口 30001
+[2023-09-12T15:44:15.699] [INFO] default - F:\mylearn\myexample\example\node\src\node\ffmpeg
+[2023-09-12T15:44:27.566] [INFO] default - 转码完成
+[2023-09-12T15:44:28.572] [INFO] default - 文件已删除
+[2023-09-12T15:44:28.573] [INFO] default - 源文件已删除
+[2023-09-12T16:04:48.111] [INFO] default - 转码完成
+[2023-09-12T16:04:49.113] [ERROR] default - 删除源文件文件失败 [Error: EBUSY: resource busy or locked, unlink 'F:\mylearn\myexample\example\node\src\node\ffmpeg\uploads\test.mkv'] {
+  errno: -4082,
+  code: 'EBUSY',
+  syscall: 'unlink',
+  path: 'F:\\mylearn\\myexample\\example\\node\\src\\node\\ffmpeg\\uploads\\test.mkv'
+}
+[2023-09-12T16:04:49.115] [INFO] default - 文件已删除
+[2023-09-12T16:07:21.466] [INFO] default - 转码完成
+[2023-09-12T16:07:22.473] [INFO] default - 文件已删除
+[2023-09-12T16:07:22.473] [INFO] default - 源文件已删除
+[2023-09-12T16:08:50.973] [INFO] default - 转码完成
+[2023-09-12T16:08:51.980] [INFO] default - 文件已删除
+[2023-09-12T16:08:51.981] [INFO] default - 源文件已删除
+[2023-09-12T16:23:59.526] [INFO] default - 转码完成
+[2023-09-12T16:24:00.540] [INFO] default - 文件已删除
+[2023-09-12T16:24:00.540] [INFO] default - 源文件已删除

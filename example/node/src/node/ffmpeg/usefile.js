@@ -16,7 +16,7 @@ const log4js = require('log4js');
 
 log4js.configure({
   appenders: {
-    file: { type: 'file', filename: path.join(__dirname, 'dist','myLogs', 'app.log') }, 
+    file: { type: 'file', filename: path.join(__dirname, 'myLogs', 'app.log') }, 
     console: { type: 'console' }, 
   },
   categories: { default: { appenders: ['file', 'console'], level: 'info' } },
@@ -37,12 +37,10 @@ const upload = multer({ storage: storage });
 
 const port = 30001; 
 
-// 配置 body-parser 中间件，用于解析请求体中的 JSON 数据
 app.use(bodyParser.json());
 app.use(morgan('dev'));
 app.use(cors()); 
 
-// 处理 POST 请求
 app.post('/convert', upload.single('file'), (req, res) => {
   const uploadedFile = req.file; 
   console.log(uploadedFile, '[uploadedFile]');
@@ -52,10 +50,8 @@ app.post('/convert', upload.single('file'), (req, res) => {
     return res.status(400).json({ message: '没有上传文件' });
   }
 
-  // 创建一个唯一的输出文件名，这里使用当前时间戳
   const uniqueFilename = 'output_' + Date.now() + '.mp4';
 
-  // 创建输出文件的完整路径
   const outputPath = path.join(__dirname, uniqueFilename);
   ffmpeg()
   .input(path.join(__dirname,'uploads', uploadedFile.originalname)) 
@@ -74,12 +70,14 @@ app.post('/convert', upload.single('file'), (req, res) => {
           logger.info('文件已删除');
         }
       });
-      if (uploadedFile.buffer) {
-        logger.info('上传文件已删除');
-        uploadedFile.buffer = null;
-      }
+      fs.unlink(uploadedFile.path, (err) => {
+        if (err) {
+          logger.error('删除源文件文件失败', err);
+        } else {
+          logger.info('源文件已删除');
+        }
+      })
     },1000);
-   
   })
   .on('error', (err) => {
     logger.error('转码出错',err);
@@ -89,10 +87,9 @@ app.post('/convert', upload.single('file'), (req, res) => {
 
 });
 
-// 启动服务器
 app.listen(port, () => {
-    console.log(`服务器已启动，监听端口 ${port}`);
-    console.log(path.join(__dirname));
+    logger.info(`服务器已启动，监听端口 ${port}`);
+    logger.info(path.join(__dirname));
 });
 
 
