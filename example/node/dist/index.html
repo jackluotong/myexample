@@ -4,49 +4,103 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>my example</title>
-    <script src="name.8af97a.js"></script>
+    <title>transfer</title>
+    <style>
+      .output-wrapper{
+        display: grid;
+        margin: 10px 0 0 0;
+        width: 400px;
+        height: 400px;
+        background-color: rgb(7, 7, 7);
+      }
+      .input-wrapper{
+        background-color: rgba(136, 126, 126, 0.2);
+        display: grid;
+        width: 400px;
+      }
+    </style>
 </head>
 <body>
-    <input type="file" id="videoInput">
+  <div class="input-wrapper">
+      <div>
+        <label for="">文件形式上传</label>
+        <input type="file" id="videoInput">
+      </div>
+      <!-- <div>
+        <label for="">blob形式</label>
+      </div> -->
+      
+  </div>
+    <div class="output-wrapper">
+        <div class="content-wrapper">
+        </div>
+    </div>
 <script>
 const videoInput = document.getElementById('videoInput');
+const recordDom = document.getElementsByClassName('content-wrapper')[0];
+const infoList = []; 
+
+async function uploadAndConvertVideo(blob) {
+  const formData = new FormData();
+  formData.append('file', blob, 'video.mp4'); 
+
+  try {
+    let myInit = {
+      method: "POST",
+      mode: "cors",
+      cache: "default",
+      body: formData
+    };
+    addInfo('转码开始');
+    const response = await fetch('http://127.0.0.1:30001/convert', myInit);
+
+    if (response.ok) {
+      const videoBlob = await response.blob();
+      console.log(videoBlob);  
+      downloadFile(videoBlob);      
+      addInfo('转码成功');
+    } else {
+      addInfo('视频转码失败');
+    }
+  } catch (error) {
+    addInfo('发生错误:', error);
+  }
+}
+
+// 添加事件监听器，当文件选择发生变化时调用上传和转码函数
 videoInput.addEventListener('change', async () => {
   const selectedFile = videoInput.files[0];
-  
+  console.log(selectedFile);
   if (selectedFile) {
-    const formData = new FormData();
-    formData.append('file', selectedFile);
-    try {
-        let myInit = {
-                method: "POST",
-                // headers: {
-                //     "Content-Type": "video/x-matroska",
-                // },
-                // mode: "cors",
-                // cache: "default",
-                body: formData
-            };
-      const response = await fetch('http://127.0.0.1:30001/convert', myInit);
-      console.log(response,'[response]')
-      if (response.ok) {
-        const videoBlob = await response.blob();
-        downloadFile(videoBlob);
-      } else {
-        console.error('视频转码失败');
-      }
-    } catch (error) {
-      console.error('发生错误:', error);
-    }
+    // 将选定的文件转换为 Blob 对象
+    const fileBlob = new Blob([selectedFile], { type: selectedFile.type });
+    await uploadAndConvertVideo(fileBlob);
   }
 });
-function downloadFile(blob){
-    var url = window.URL.createObjectURL(blob);
-    var a = document.createElement('a');
-    a.href = url;
-    a.style.display = 'none';
-    a.download =`${new Date()}.mp4`
-    a.click();
+
+
+
+
+
+function downloadFile(blob) {
+  var url = window.URL.createObjectURL(blob);
+  var a = document.createElement('a');
+  a.href = url;
+  a.style.display = 'none';
+  a.download = `${new Date()}.mp4`;
+  document.body.appendChild(a); 
+  a.click();
+  document.body.removeChild(a); 
+}
+
+function addInfo(message) {
+  const timestamp = new Date().toLocaleString();
+  const messageElement = document.createElement('p');
+  messageElement.style.color = '#ffff';
+  messageElement.innerHTML = `${timestamp} -- ${message}`;
+
+  infoList.push(message);
+  recordDom.appendChild(messageElement);
 }
 </script>
 

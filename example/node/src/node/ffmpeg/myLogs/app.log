@@ -32,3 +32,633 @@
 [2023-09-12T16:23:59.526] [INFO] default - 转码完成
 [2023-09-12T16:24:00.540] [INFO] default - 文件已删除
 [2023-09-12T16:24:00.540] [INFO] default - 源文件已删除
+[2023-09-13T16:49:54.572] [INFO] default - 服务器已启动，监听端口 30001
+[2023-09-13T16:49:54.574] [INFO] default - F:\mylearn\myexample\example\node\src\node\ffmpeg
+[2023-09-13T16:50:05.408] [INFO] default - 转码完成
+[2023-09-13T16:50:06.419] [INFO] default - 文件已删除
+[2023-09-13T16:50:06.420] [INFO] default - 源文件已删除
+[2023-09-14T10:46:50.739] [INFO] default - 转码完成
+[2023-09-14T10:46:51.750] [INFO] default - 文件已删除
+[2023-09-14T10:46:51.752] [INFO] default - 源文件已删除
+[2023-09-21T13:43:14.308] [INFO] default - 服务器已启动，监听端口 30001
+[2023-09-21T13:43:14.310] [INFO] default - F:\mylearn\myexample\example\node\src\node\ffmpeg
+[2023-09-21T15:13:09.026] [INFO] default - 服务器已启动，监听端口 30002
+[2023-09-21T15:13:09.029] [INFO] default - F:\mylearn\myexample\example\node\src\node\ffmpeg
+[2023-09-21T15:57:52.721] [INFO] default - 转码完成
+[2023-09-21T15:57:53.739] [INFO] default - 文件已删除
+[2023-09-21T15:57:53.741] [INFO] default - 源文件已删除
+[2023-09-21T15:58:09.802] [INFO] default - 转码完成
+[2023-09-21T15:58:10.814] [INFO] default - 文件已删除
+[2023-09-21T15:58:10.815] [INFO] default - 源文件已删除
+[2023-09-21T15:58:34.654] [ERROR] default - 处理请求出错 Error: spawn UNKNOWN
+    at ChildProcess.spawn (node:internal/child_process:421:11)
+    at spawn (node:child_process:761:9)
+    at F:\mylearn\myexample\example\node\node_modules\fluent-ffmpeg\lib\processor.js:152:24
+    at proto._getFfmpegPath (F:\mylearn\myexample\example\node\node_modules\fluent-ffmpeg\lib\capabilities.js:90:14)
+    at proto._spawnFfmpeg (F:\mylearn\myexample\example\node\node_modules\fluent-ffmpeg\lib\processor.js:132:10)
+    at proto.availableFormats.proto.getAvailableFormats (F:\mylearn\myexample\example\node\node_modules\fluent-ffmpeg\lib\capabilities.js:517:10)
+    at F:\mylearn\myexample\example\node\node_modules\fluent-ffmpeg\lib\capabilities.js:568:14
+    at nextTask (F:\mylearn\myexample\example\node\node_modules\async\dist\async.js:5789:13)
+    at Object.waterfall (F:\mylearn\myexample\example\node\node_modules\async\dist\async.js:5800:9)
+    at Object.awaitable [as waterfall] (F:\mylearn\myexample\example\node\node_modules\async\dist\async.js:211:32) {
+  errno: -4094,
+  code: 'UNKNOWN',
+  syscall: 'spawn'
+}
+[2023-09-21T15:58:41.146] [ERROR] default - 处理请求出错 Error: spawn UNKNOWN
+    at ChildProcess.spawn (node:internal/child_process:421:11)
+    at spawn (node:child_process:761:9)
+    at F:\mylearn\myexample\example\node\node_modules\fluent-ffmpeg\lib\processor.js:152:24
+    at proto._getFfmpegPath (F:\mylearn\myexample\example\node\node_modules\fluent-ffmpeg\lib\capabilities.js:90:14)
+    at proto._spawnFfmpeg (F:\mylearn\myexample\example\node\node_modules\fluent-ffmpeg\lib\processor.js:132:10)
+    at proto.availableFormats.proto.getAvailableFormats (F:\mylearn\myexample\example\node\node_modules\fluent-ffmpeg\lib\capabilities.js:517:10)
+    at F:\mylearn\myexample\example\node\node_modules\fluent-ffmpeg\lib\capabilities.js:568:14
+    at nextTask (F:\mylearn\myexample\example\node\node_modules\async\dist\async.js:5789:13)
+    at Object.waterfall (F:\mylearn\myexample\example\node\node_modules\async\dist\async.js:5800:9)
+    at Object.awaitable [as waterfall] (F:\mylearn\myexample\example\node\node_modules\async\dist\async.js:211:32) {
+  errno: -4094,
+  code: 'UNKNOWN',
+  syscall: 'spawn'
+}
+[2023-09-21T16:03:34.524] [ERROR] default - 处理请求出错 Error: spawn UNKNOWN
+    at ChildProcess.spawn (node:internal/child_process:421:11)
+    at spawn (node:child_process:761:9)
+    at F:\mylearn\myexample\example\node\node_modules\fluent-ffmpeg\lib\processor.js:152:24
+    at proto._getFfmpegPath (F:\mylearn\myexample\example\node\node_modules\fluent-ffmpeg\lib\capabilities.js:90:14)
+    at proto._spawnFfmpeg (F:\mylearn\myexample\example\node\node_modules\fluent-ffmpeg\lib\processor.js:132:10)
+    at proto.availableFormats.proto.getAvailableFormats (F:\mylearn\myexample\example\node\node_modules\fluent-ffmpeg\lib\capabilities.js:517:10)
+    at F:\mylearn\myexample\example\node\node_modules\fluent-ffmpeg\lib\capabilities.js:568:14
+    at nextTask (F:\mylearn\myexample\example\node\node_modules\async\dist\async.js:5789:13)
+    at Object.waterfall (F:\mylearn\myexample\example\node\node_modules\async\dist\async.js:5800:9)
+    at Object.awaitable [as waterfall] (F:\mylearn\myexample\example\node\node_modules\async\dist\async.js:211:32) {
+  errno: -4094,
+  code: 'UNKNOWN',
+  syscall: 'spawn'
+}
+[2023-09-21T16:06:25.439] [INFO] default - 服务器已启动，监听端口 30001
+[2023-09-21T16:06:25.441] [INFO] default - F:\mylearn\myexample\example\node\src\node\ffmpeg
+[2023-09-21T16:06:55.440] [INFO] default - 转码完成
+[2023-09-21T16:06:56.455] [INFO] default - 文件已删除
+[2023-09-21T16:06:56.456] [INFO] default - 源文件已删除
+[2023-09-21T17:00:39.263] [INFO] default - 服务器已启动，监听端口 30001
+[2023-09-21T17:00:39.265] [INFO] default - F:\mylearn\myexample\example\node\src\node\ffmpeg
+[2023-09-21T17:01:00.963] [INFO] default - 服务器已启动，监听端口 30001
+[2023-09-21T17:01:00.965] [INFO] default - F:\mylearn\myexample\example\node\src\node\ffmpeg
+[2023-09-21T17:01:27.161] [INFO] default - 服务器已启动，监听端口 30001
+[2023-09-21T17:01:27.163] [INFO] default - F:\mylearn\myexample\example\node\src\node\ffmpeg
+[2023-09-21T17:01:52.734] [INFO] default - 服务器已启动，监听端口 30001
+[2023-09-21T17:01:52.737] [INFO] default - F:\mylearn\myexample\example\node\src\node\ffmpeg
+[2023-09-21T17:02:21.687] [INFO] default - 服务器已启动，监听端口 30001
+[2023-09-21T17:02:21.689] [INFO] default - F:\mylearn\myexample\example\node\src\node\ffmpeg
+[2023-09-21T17:05:28.762] [INFO] default - 服务器已启动，监听端口 30001
+[2023-09-21T17:05:28.764] [INFO] default - F:\mylearn\myexample\example\node\src\node\ffmpeg
+[2023-09-21T17:05:28.769] [INFO] default - 端口 8080 未被占用
+[2023-09-21T17:05:28.771] [INFO] default - Server is running on port 8000
+[2023-09-21T17:25:11.179] [INFO] default - 服务器已启动，监听端口 30001
+[2023-09-21T17:25:11.181] [INFO] default - F:\mylearn\myexample\example\node\src\node\ffmpeg
+[2023-09-21T17:25:35.117] [INFO] default - 服务器已启动，监听端口 30001
+[2023-09-21T17:25:35.119] [INFO] default - F:\mylearn\myexample\example\node\src\node\ffmpeg
+[2023-09-21T17:25:48.245] [INFO] default - 服务器已启动，监听端口 30001
+[2023-09-21T17:25:48.247] [INFO] default - F:\mylearn\myexample\example\node\src\node\ffmpeg <ref *1> {
+  resolve: [Function: resolve],
+  normalize: [Function: normalize],
+  isAbsolute: [Function: isAbsolute],
+  join: [Function: join],
+  relative: [Function: relative],
+  toNamespacedPath: [Function: toNamespacedPath],
+  dirname: [Function: dirname],
+  basename: [Function: basename],
+  extname: [Function: extname],
+  format: [Function: bound _format],
+  parse: [Function: parse],
+  sep: '\\',
+  delimiter: ';',
+  win32: [Circular *1],
+  posix: <ref *2> {
+    resolve: [Function: resolve],
+    normalize: [Function: normalize],
+    isAbsolute: [Function: isAbsolute],
+    join: [Function: join],
+    relative: [Function: relative],
+    toNamespacedPath: [Function: toNamespacedPath],
+    dirname: [Function: dirname],
+    basename: [Function: basename],
+    extname: [Function: extname],
+    format: [Function: bound _format],
+    parse: [Function: parse],
+    sep: '/',
+    delimiter: ':',
+    win32: [Circular *1],
+    posix: [Circular *2],
+    _makeLong: [Function: toNamespacedPath]
+  },
+  _makeLong: [Function: toNamespacedPath]
+}
+[2023-09-21T19:37:00.875] [ERROR] default - 处理请求出错 Error: spawn UNKNOWN
+    at ChildProcess.spawn (node:internal/child_process:421:11)
+    at spawn (node:child_process:761:9)
+    at F:\mylearn\myexample\example\node\node_modules\fluent-ffmpeg\lib\processor.js:152:24
+    at proto._getFfmpegPath (F:\mylearn\myexample\example\node\node_modules\fluent-ffmpeg\lib\capabilities.js:90:14)
+    at proto._spawnFfmpeg (F:\mylearn\myexample\example\node\node_modules\fluent-ffmpeg\lib\processor.js:132:10)
+    at proto.availableFormats.proto.getAvailableFormats (F:\mylearn\myexample\example\node\node_modules\fluent-ffmpeg\lib\capabilities.js:517:10)
+    at F:\mylearn\myexample\example\node\node_modules\fluent-ffmpeg\lib\capabilities.js:568:14
+    at nextTask (F:\mylearn\myexample\example\node\node_modules\async\dist\async.js:5789:13)
+    at Object.waterfall (F:\mylearn\myexample\example\node\node_modules\async\dist\async.js:5800:9)
+    at Object.awaitable [as waterfall] (F:\mylearn\myexample\example\node\node_modules\async\dist\async.js:211:32) {
+  errno: -4094,
+  code: 'UNKNOWN',
+  syscall: 'spawn'
+}
+[2023-09-21T19:37:16.708] [ERROR] default - 处理请求出错 Error: spawn UNKNOWN
+    at ChildProcess.spawn (node:internal/child_process:421:11)
+    at spawn (node:child_process:761:9)
+    at F:\mylearn\myexample\example\node\node_modules\fluent-ffmpeg\lib\processor.js:152:24
+    at proto._getFfmpegPath (F:\mylearn\myexample\example\node\node_modules\fluent-ffmpeg\lib\capabilities.js:90:14)
+    at proto._spawnFfmpeg (F:\mylearn\myexample\example\node\node_modules\fluent-ffmpeg\lib\processor.js:132:10)
+    at proto.availableFormats.proto.getAvailableFormats (F:\mylearn\myexample\example\node\node_modules\fluent-ffmpeg\lib\capabilities.js:517:10)
+    at F:\mylearn\myexample\example\node\node_modules\fluent-ffmpeg\lib\capabilities.js:568:14
+    at nextTask (F:\mylearn\myexample\example\node\node_modules\async\dist\async.js:5789:13)
+    at Object.waterfall (F:\mylearn\myexample\example\node\node_modules\async\dist\async.js:5800:9)
+    at Object.awaitable [as waterfall] (F:\mylearn\myexample\example\node\node_modules\async\dist\async.js:211:32) {
+  errno: -4094,
+  code: 'UNKNOWN',
+  syscall: 'spawn'
+}
+[2023-09-21T19:37:47.507] [INFO] default - 转码完成
+[2023-09-21T19:37:48.519] [INFO] default - 文件已删除
+[2023-09-21T19:37:48.520] [INFO] default - 源文件已删除
+[2023-09-21T19:38:32.638] [INFO] default - 转码完成
+[2023-09-21T19:38:33.640] [INFO] default - 文件已删除
+[2023-09-21T19:38:33.641] [INFO] default - 源文件已删除
+[2023-09-21T19:39:23.100] [INFO] default - 转码完成
+[2023-09-21T19:39:24.103] [INFO] default - 文件已删除
+[2023-09-21T19:39:24.104] [INFO] default - 源文件已删除
+[2023-09-21T19:40:01.338] [INFO] default - 服务器已启动，监听端口 30001
+[2023-09-21T19:40:01.340] [INFO] default - F:\mylearn\myexample\example\node\src\node\ffmpeg <ref *1> {
+  resolve: [Function: resolve],
+  normalize: [Function: normalize],
+  isAbsolute: [Function: isAbsolute],
+  join: [Function: join],
+  relative: [Function: relative],
+  toNamespacedPath: [Function: toNamespacedPath],
+  dirname: [Function: dirname],
+  basename: [Function: basename],
+  extname: [Function: extname],
+  format: [Function: bound _format],
+  parse: [Function: parse],
+  sep: '\\',
+  delimiter: ';',
+  win32: [Circular *1],
+  posix: <ref *2> {
+    resolve: [Function: resolve],
+    normalize: [Function: normalize],
+    isAbsolute: [Function: isAbsolute],
+    join: [Function: join],
+    relative: [Function: relative],
+    toNamespacedPath: [Function: toNamespacedPath],
+    dirname: [Function: dirname],
+    basename: [Function: basename],
+    extname: [Function: extname],
+    format: [Function: bound _format],
+    parse: [Function: parse],
+    sep: '/',
+    delimiter: ':',
+    win32: [Circular *1],
+    posix: [Circular *2],
+    _makeLong: [Function: toNamespacedPath]
+  },
+  _makeLong: [Function: toNamespacedPath]
+}
+[2023-09-21T19:40:27.908] [INFO] default - 转码完成
+[2023-09-21T19:40:28.917] [INFO] default - 文件已删除
+[2023-09-21T19:40:28.918] [INFO] default - 源文件已删除
+[2023-09-21T19:40:57.690] [INFO] default - 转码完成
+[2023-09-21T19:40:58.703] [INFO] default - 文件已删除
+[2023-09-21T19:40:58.705] [INFO] default - 源文件已删除
+[2023-09-21T19:42:11.733] [INFO] default - 转码完成
+[2023-09-21T19:42:12.743] [INFO] default - 文件已删除
+[2023-09-21T19:42:12.744] [INFO] default - 源文件已删除
+[2023-09-21T19:42:45.497] [INFO] default - 转码完成
+[2023-09-21T19:42:46.500] [INFO] default - 文件已删除
+[2023-09-21T19:42:46.503] [INFO] default - 源文件已删除
+[2023-09-21T19:43:05.374] [INFO] default - 转码完成
+[2023-09-21T19:43:06.382] [INFO] default - 文件已删除
+[2023-09-21T19:43:06.383] [INFO] default - 源文件已删除
+[2023-09-21T19:44:00.371] [INFO] default - 转码完成
+[2023-09-21T19:44:01.382] [INFO] default - 文件已删除
+[2023-09-21T19:44:01.384] [INFO] default - 源文件已删除
+[2023-09-21T19:48:49.222] [INFO] default - 转码完成
+[2023-09-21T19:48:50.227] [INFO] default - 文件已删除
+[2023-09-21T19:48:50.228] [INFO] default - 源文件已删除
+[2023-09-21T20:15:12.543] [INFO] default - 服务器已启动，监听端口 30001
+[2023-09-21T20:15:12.545] [INFO] default - F:\mylearn\myexample\example\node\src\node\ffmpeg <ref *1> {
+  resolve: [Function: resolve],
+  normalize: [Function: normalize],
+  isAbsolute: [Function: isAbsolute],
+  join: [Function: join],
+  relative: [Function: relative],
+  toNamespacedPath: [Function: toNamespacedPath],
+  dirname: [Function: dirname],
+  basename: [Function: basename],
+  extname: [Function: extname],
+  format: [Function: bound _format],
+  parse: [Function: parse],
+  sep: '\\',
+  delimiter: ';',
+  win32: [Circular *1],
+  posix: <ref *2> {
+    resolve: [Function: resolve],
+    normalize: [Function: normalize],
+    isAbsolute: [Function: isAbsolute],
+    join: [Function: join],
+    relative: [Function: relative],
+    toNamespacedPath: [Function: toNamespacedPath],
+    dirname: [Function: dirname],
+    basename: [Function: basename],
+    extname: [Function: extname],
+    format: [Function: bound _format],
+    parse: [Function: parse],
+    sep: '/',
+    delimiter: ':',
+    win32: [Circular *1],
+    posix: [Circular *2],
+    _makeLong: [Function: toNamespacedPath]
+  },
+  _makeLong: [Function: toNamespacedPath]
+}
+[2023-09-21T20:15:24.563] [INFO] default - 转码完成
+[2023-09-21T20:15:25.572] [INFO] default - 文件已删除
+[2023-09-21T20:15:25.573] [INFO] default - 源文件已删除
+[2023-09-21T20:16:59.611] [INFO] default - 服务器已启动，监听端口 30002
+[2023-09-21T20:16:59.613] [INFO] default - F:\mylearn\myexample\example\node\src\node\ffmpeg
+[2023-09-21T20:16:59.619] [INFO] default - 端口 8080 未被占用
+[2023-09-21T20:16:59.620] [INFO] default - Server is running on port 8000
+[2023-09-21T20:17:07.274] [ERROR] default - 处理请求出错 Error: spawn UNKNOWN
+    at ChildProcess.spawn (node:internal/child_process:421:11)
+    at spawn (node:child_process:761:9)
+    at F:\mylearn\myexample\example\node\node_modules\fluent-ffmpeg\lib\processor.js:152:24
+    at proto._getFfmpegPath (F:\mylearn\myexample\example\node\node_modules\fluent-ffmpeg\lib\capabilities.js:90:14)
+    at proto._spawnFfmpeg (F:\mylearn\myexample\example\node\node_modules\fluent-ffmpeg\lib\processor.js:132:10)
+    at proto.availableFormats.proto.getAvailableFormats (F:\mylearn\myexample\example\node\node_modules\fluent-ffmpeg\lib\capabilities.js:517:10)
+    at F:\mylearn\myexample\example\node\node_modules\fluent-ffmpeg\lib\capabilities.js:568:14
+    at nextTask (F:\mylearn\myexample\example\node\node_modules\async\dist\async.js:5789:13)
+    at Object.waterfall (F:\mylearn\myexample\example\node\node_modules\async\dist\async.js:5800:9)
+    at Object.awaitable [as waterfall] (F:\mylearn\myexample\example\node\node_modules\async\dist\async.js:211:32) {
+  errno: -4094,
+  code: 'UNKNOWN',
+  syscall: 'spawn'
+}
+[2023-09-21T20:17:22.566] [ERROR] default - 处理请求出错 Error: spawn UNKNOWN
+    at ChildProcess.spawn (node:internal/child_process:421:11)
+    at spawn (node:child_process:761:9)
+    at F:\mylearn\myexample\example\node\node_modules\fluent-ffmpeg\lib\processor.js:152:24
+    at proto._getFfmpegPath (F:\mylearn\myexample\example\node\node_modules\fluent-ffmpeg\lib\capabilities.js:90:14)
+    at proto._spawnFfmpeg (F:\mylearn\myexample\example\node\node_modules\fluent-ffmpeg\lib\processor.js:132:10)
+    at proto.availableFormats.proto.getAvailableFormats (F:\mylearn\myexample\example\node\node_modules\fluent-ffmpeg\lib\capabilities.js:517:10)
+    at F:\mylearn\myexample\example\node\node_modules\fluent-ffmpeg\lib\capabilities.js:568:14
+    at nextTask (F:\mylearn\myexample\example\node\node_modules\async\dist\async.js:5789:13)
+    at Object.waterfall (F:\mylearn\myexample\example\node\node_modules\async\dist\async.js:5800:9)
+    at Object.awaitable [as waterfall] (F:\mylearn\myexample\example\node\node_modules\async\dist\async.js:211:32) {
+  errno: -4094,
+  code: 'UNKNOWN',
+  syscall: 'spawn'
+}
+[2023-09-21T20:17:44.972] [ERROR] default - 处理请求出错 Error: spawn UNKNOWN
+    at ChildProcess.spawn (node:internal/child_process:421:11)
+    at spawn (node:child_process:761:9)
+    at F:\mylearn\myexample\example\node\node_modules\fluent-ffmpeg\lib\processor.js:152:24
+    at proto._getFfmpegPath (F:\mylearn\myexample\example\node\node_modules\fluent-ffmpeg\lib\capabilities.js:90:14)
+    at proto._spawnFfmpeg (F:\mylearn\myexample\example\node\node_modules\fluent-ffmpeg\lib\processor.js:132:10)
+    at proto.availableFormats.proto.getAvailableFormats (F:\mylearn\myexample\example\node\node_modules\fluent-ffmpeg\lib\capabilities.js:517:10)
+    at F:\mylearn\myexample\example\node\node_modules\fluent-ffmpeg\lib\capabilities.js:568:14
+    at nextTask (F:\mylearn\myexample\example\node\node_modules\async\dist\async.js:5789:13)
+    at Object.waterfall (F:\mylearn\myexample\example\node\node_modules\async\dist\async.js:5800:9)
+    at Object.awaitable [as waterfall] (F:\mylearn\myexample\example\node\node_modules\async\dist\async.js:211:32) {
+  errno: -4094,
+  code: 'UNKNOWN',
+  syscall: 'spawn'
+}
+[2023-09-21T20:29:01.669] [INFO] default - 服务器已启动，监听端口 30001
+[2023-09-21T20:29:01.672] [INFO] default - F:\mylearn\myexample\example\node\src\node\ffmpeg <ref *1> {
+  resolve: [Function: resolve],
+  normalize: [Function: normalize],
+  isAbsolute: [Function: isAbsolute],
+  join: [Function: join],
+  relative: [Function: relative],
+  toNamespacedPath: [Function: toNamespacedPath],
+  dirname: [Function: dirname],
+  basename: [Function: basename],
+  extname: [Function: extname],
+  format: [Function: bound _format],
+  parse: [Function: parse],
+  sep: '\\',
+  delimiter: ';',
+  win32: [Circular *1],
+  posix: <ref *2> {
+    resolve: [Function: resolve],
+    normalize: [Function: normalize],
+    isAbsolute: [Function: isAbsolute],
+    join: [Function: join],
+    relative: [Function: relative],
+    toNamespacedPath: [Function: toNamespacedPath],
+    dirname: [Function: dirname],
+    basename: [Function: basename],
+    extname: [Function: extname],
+    format: [Function: bound _format],
+    parse: [Function: parse],
+    sep: '/',
+    delimiter: ':',
+    win32: [Circular *1],
+    posix: [Circular *2],
+    _makeLong: [Function: toNamespacedPath]
+  },
+  _makeLong: [Function: toNamespacedPath]
+}
+[2023-09-21T20:29:12.922] [INFO] default - 转码完成
+[2023-09-21T20:29:13.928] [INFO] default - 文件已删除
+[2023-09-21T20:29:13.929] [INFO] default - 源文件已删除
+[2023-09-21T20:29:58.421] [INFO] default - 转码完成
+[2023-09-21T20:29:59.431] [INFO] default - 文件已删除
+[2023-09-21T20:29:59.432] [INFO] default - 源文件已删除
+[2023-09-21T20:31:19.687] [INFO] default - 转码完成
+[2023-09-21T20:31:20.699] [INFO] default - 文件已删除
+[2023-09-21T20:31:20.699] [INFO] default - 源文件已删除
+[2023-09-21T20:31:48.122] [INFO] default - 转码完成
+[2023-09-21T20:31:49.134] [INFO] default - 文件已删除
+[2023-09-21T20:31:49.136] [INFO] default - 源文件已删除
+[2023-09-21T20:35:57.186] [INFO] default - 转码完成
+[2023-09-21T20:35:58.200] [INFO] default - 文件已删除
+[2023-09-21T20:35:58.202] [INFO] default - 源文件已删除
+[2023-09-21T20:36:47.608] [INFO] default - 转码完成
+[2023-09-21T20:36:48.623] [INFO] default - 文件已删除
+[2023-09-21T20:36:48.625] [INFO] default - 源文件已删除
+[2023-09-21T20:37:18.138] [INFO] default - 转码完成
+[2023-09-21T20:37:19.148] [INFO] default - 文件已删除
+[2023-09-21T20:37:19.149] [INFO] default - 源文件已删除
+[2023-09-21T20:39:26.236] [INFO] default - 服务器已启动，监听端口 30002
+[2023-09-21T20:39:26.238] [INFO] default - F:\mylearn\myexample\example\node\src\node\ffmpeg
+[2023-09-21T20:39:26.243] [INFO] default - 端口 8080 未被占用
+[2023-09-21T20:39:26.244] [INFO] default - Server is running on port 8000
+[2023-09-21T20:39:46.633] [INFO] default - 转码完成
+[2023-09-21T20:39:46.640] [INFO] default - 文件已删除
+[2023-09-21T20:39:46.641] [INFO] default - 源文件已删除
+[2023-09-21T20:42:48.034] [INFO] default - 服务器已启动，监听端口 30002
+[2023-09-21T20:42:48.036] [INFO] default - F:\mylearn\myexample\example\node\src\node\ffmpeg
+[2023-09-21T20:42:48.041] [INFO] default - 端口 8080 未被占用
+[2023-09-21T20:42:48.042] [INFO] default - Server is running on port 8000
+[2023-09-21T20:43:19.749] [INFO] default - 转码完成
+[2023-09-21T20:43:19.750] [INFO] default - outputPath: F:\mylearn\myexample\example\node\src\node\ffmpeg\output_1695300194655.mp4
+[2023-09-21T20:43:19.753] [INFO] default - 文件已删除
+[2023-09-21T20:43:19.753] [INFO] default - 源文件已删除
+[2023-09-21T20:44:37.800] [INFO] default - 服务器已启动，监听端口 30002
+[2023-09-21T20:44:37.802] [INFO] default - F:\mylearn\myexample\example\node\src\node\ffmpeg
+[2023-09-21T20:44:37.808] [INFO] default - 端口 8080 未被占用
+[2023-09-21T20:44:37.809] [INFO] default - Server is running on port 8000
+[2023-09-21T20:44:48.220] [INFO] default - 转码完成
+[2023-09-21T20:44:48.221] [INFO] default - outputPath: F:\mylearn\myexample\example\node\src\node\ffmpeg\output_1695300283176.mp4 {
+  fieldname: 'file',
+  originalname: 'video.mp4',
+  encoding: '7bit',
+  mimetype: 'video/x-matroska',
+  destination: 'uploads/',
+  filename: 'video.mp4',
+  path: 'uploads\\video.mp4',
+  size: 11487851
+}
+[2023-09-21T20:44:48.229] [INFO] default - 文件已删除
+[2023-09-21T20:44:48.230] [INFO] default - 源文件已删除
+[2023-09-21T20:48:11.318] [INFO] default - 服务器已启动，监听端口 30002
+[2023-09-21T20:48:11.320] [INFO] default - F:\mylearn\myexample\example\node\src\node\ffmpeg
+[2023-09-21T20:48:11.325] [INFO] default - 端口 8080 未被占用
+[2023-09-21T20:48:11.326] [INFO] default - Server is running on port 8000
+[2023-09-21T20:48:23.662] [INFO] default - 转码完成
+[2023-09-21T20:48:23.663] [INFO] default - outputPath: F:\mylearn\myexample\example\node\src\node\ffmpeg\output_1695300498546.mp4 {
+  fieldname: 'file',
+  originalname: 'video.mp4',
+  encoding: '7bit',
+  mimetype: 'video/x-matroska',
+  destination: 'uploads/',
+  filename: 'video.mp4',
+  path: 'uploads\\video.mp4',
+  size: 11487851
+}
+[2023-09-21T20:48:23.666] [INFO] default - 文件已删除
+[2023-09-21T20:48:23.666] [INFO] default - 源文件已删除
+[2023-09-21T21:00:19.255] [INFO] default - 服务器已启动，监听端口 30001
+[2023-09-21T21:00:19.257] [INFO] default - F:\mylearn\myexample\example\node\src\node\ffmpeg <ref *1> {
+  resolve: [Function: resolve],
+  normalize: [Function: normalize],
+  isAbsolute: [Function: isAbsolute],
+  join: [Function: join],
+  relative: [Function: relative],
+  toNamespacedPath: [Function: toNamespacedPath],
+  dirname: [Function: dirname],
+  basename: [Function: basename],
+  extname: [Function: extname],
+  format: [Function: bound _format],
+  parse: [Function: parse],
+  sep: '\\',
+  delimiter: ';',
+  win32: [Circular *1],
+  posix: <ref *2> {
+    resolve: [Function: resolve],
+    normalize: [Function: normalize],
+    isAbsolute: [Function: isAbsolute],
+    join: [Function: join],
+    relative: [Function: relative],
+    toNamespacedPath: [Function: toNamespacedPath],
+    dirname: [Function: dirname],
+    basename: [Function: basename],
+    extname: [Function: extname],
+    format: [Function: bound _format],
+    parse: [Function: parse],
+    sep: '/',
+    delimiter: ':',
+    win32: [Circular *1],
+    posix: [Circular *2],
+    _makeLong: [Function: toNamespacedPath]
+  },
+  _makeLong: [Function: toNamespacedPath]
+}
+[2023-09-21T21:01:14.093] [INFO] default - 服务器已启动，监听端口 30001
+[2023-09-21T21:01:14.095] [INFO] default - F:\mylearn\myexample\example\node\src\node\ffmpeg <ref *1> {
+  resolve: [Function: resolve],
+  normalize: [Function: normalize],
+  isAbsolute: [Function: isAbsolute],
+  join: [Function: join],
+  relative: [Function: relative],
+  toNamespacedPath: [Function: toNamespacedPath],
+  dirname: [Function: dirname],
+  basename: [Function: basename],
+  extname: [Function: extname],
+  format: [Function: bound _format],
+  parse: [Function: parse],
+  sep: '\\',
+  delimiter: ';',
+  win32: [Circular *1],
+  posix: <ref *2> {
+    resolve: [Function: resolve],
+    normalize: [Function: normalize],
+    isAbsolute: [Function: isAbsolute],
+    join: [Function: join],
+    relative: [Function: relative],
+    toNamespacedPath: [Function: toNamespacedPath],
+    dirname: [Function: dirname],
+    basename: [Function: basename],
+    extname: [Function: extname],
+    format: [Function: bound _format],
+    parse: [Function: parse],
+    sep: '/',
+    delimiter: ':',
+    win32: [Circular *1],
+    posix: [Circular *2],
+    _makeLong: [Function: toNamespacedPath]
+  },
+  _makeLong: [Function: toNamespacedPath]
+}
+[2023-09-21T21:03:02.362] [INFO] default - 服务器已启动，监听端口 30001
+[2023-09-21T21:03:02.364] [INFO] default - F:\mylearn\myexample\example\node\src\node\ffmpeg <ref *1> {
+  resolve: [Function: resolve],
+  normalize: [Function: normalize],
+  isAbsolute: [Function: isAbsolute],
+  join: [Function: join],
+  relative: [Function: relative],
+  toNamespacedPath: [Function: toNamespacedPath],
+  dirname: [Function: dirname],
+  basename: [Function: basename],
+  extname: [Function: extname],
+  format: [Function: bound _format],
+  parse: [Function: parse],
+  sep: '\\',
+  delimiter: ';',
+  win32: [Circular *1],
+  posix: <ref *2> {
+    resolve: [Function: resolve],
+    normalize: [Function: normalize],
+    isAbsolute: [Function: isAbsolute],
+    join: [Function: join],
+    relative: [Function: relative],
+    toNamespacedPath: [Function: toNamespacedPath],
+    dirname: [Function: dirname],
+    basename: [Function: basename],
+    extname: [Function: extname],
+    format: [Function: bound _format],
+    parse: [Function: parse],
+    sep: '/',
+    delimiter: ':',
+    win32: [Circular *1],
+    posix: [Circular *2],
+    _makeLong: [Function: toNamespacedPath]
+  },
+  _makeLong: [Function: toNamespacedPath]
+}
+[2023-09-21T21:03:26.460] [INFO] default - 服务器已启动，监听端口 30001
+[2023-09-21T21:04:09.102] [INFO] default - 转码完成
+[2023-09-21T21:04:09.103] [INFO] default - outputPath: F:\mylearn\myexample\example\node\src\node\ffmpeg\output_1695301444195.mp4 {
+  fieldname: 'file',
+  originalname: 'video.mp4',
+  encoding: '7bit',
+  mimetype: 'video/x-matroska',
+  destination: 'uploads/',
+  filename: 'video.mp4',
+  path: 'uploads\\video.mp4',
+  size: 11487851
+}
+[2023-09-21T21:04:09.105] [INFO] default - 文件已删除
+[2023-09-21T21:04:09.106] [INFO] default - 源文件已删除
+[2023-09-21T21:04:30.932] [INFO] default - 服务器已启动，监听端口 30002
+[2023-09-21T21:04:30.934] [INFO] default - F:\mylearn\myexample\example\node\src\node\ffmpeg
+[2023-09-21T21:04:30.938] [INFO] default - 端口 8080 未被占用
+[2023-09-21T21:04:30.939] [INFO] default - Server is running on port 8000
+[2023-09-21T21:04:49.907] [INFO] default - 转码完成
+[2023-09-21T21:04:49.907] [INFO] default - outputPath: F:\mylearn\myexample\example\node\src\node\ffmpeg\output_1695301484908.mp4 {
+  fieldname: 'file',
+  originalname: 'video.mp4',
+  encoding: '7bit',
+  mimetype: 'video/x-matroska',
+  destination: 'uploads/',
+  filename: 'video.mp4',
+  path: 'uploads\\video.mp4',
+  size: 11487851
+}
+[2023-09-21T21:04:49.910] [INFO] default - 文件已删除
+[2023-09-21T21:04:49.911] [INFO] default - 源文件已删除
+[2023-09-21T21:05:52.171] [INFO] default - 转码完成
+[2023-09-21T21:05:52.171] [INFO] default - outputPath: F:\mylearn\myexample\example\node\src\node\ffmpeg\output_1695301547339.mp4 {
+  fieldname: 'file',
+  originalname: 'video.mp4',
+  encoding: '7bit',
+  mimetype: 'video/x-matroska',
+  destination: 'uploads/',
+  filename: 'video.mp4',
+  path: 'uploads\\video.mp4',
+  size: 11487851
+}
+[2023-09-21T21:05:52.173] [INFO] default - 文件已删除
+[2023-09-21T21:05:52.173] [INFO] default - 源文件已删除
+[2023-09-21T21:06:10.067] [INFO] default - 服务器已启动，监听端口 30001
+[2023-09-21T21:08:43.158] [INFO] default - 转码完成
+[2023-09-21T21:08:43.159] [INFO] default - outputPath: F:\mylearn\myexample\example\node\src\node\ffmpeg\output_1695301718345.mp4 {
+  fieldname: 'file',
+  originalname: 'video.mp4',
+  encoding: '7bit',
+  mimetype: 'video/x-matroska',
+  destination: 'uploads/',
+  filename: 'video.mp4',
+  path: 'uploads\\video.mp4',
+  size: 11487851
+}
+[2023-09-21T21:08:43.160] [INFO] default - 文件已删除
+[2023-09-21T21:08:43.160] [INFO] default - 源文件已删除
+[2023-09-21T21:09:10.123] [INFO] default - 服务器已启动，监听端口 30001
+[2023-09-21T21:09:21.475] [INFO] default - 转码完成
+[2023-09-21T21:09:21.475] [INFO] default - outputPath: F:\mylearn\myexample\example\node\src\node\ffmpeg\output_1695301756655.mp4 {
+  fieldname: 'file',
+  originalname: 'video.mp4',
+  encoding: '7bit',
+  mimetype: 'video/x-matroska',
+  destination: 'uploads/',
+  filename: 'video.mp4',
+  path: 'uploads\\video.mp4',
+  size: 11487851
+}
+[2023-09-21T21:09:21.476] [INFO] default - 文件已删除
+[2023-09-21T21:09:21.476] [INFO] default - 源文件已删除
+[2023-09-21T21:09:50.646] [INFO] default - 服务器已启动，监听端口 30002
+[2023-09-21T21:09:50.648] [INFO] default - F:\mylearn\myexample\example\node\src\node\ffmpeg
+[2023-09-21T21:09:50.653] [INFO] default - 端口 8080 未被占用
+[2023-09-21T21:09:50.653] [INFO] default - Server is running on port 8000
+[2023-09-21T21:10:07.845] [INFO] default - 转码完成
+[2023-09-21T21:10:07.846] [INFO] default - outputPath: F:\mylearn\myexample\example\node\src\node\ffmpeg\output_1695301802899.mp4
+[2023-09-21T21:10:07.847] [INFO] default - 文件已删除
+[2023-09-21T21:10:07.848] [INFO] default - 源文件已删除
+[2023-09-21T21:10:36.600] [INFO] default - 转码完成
+[2023-09-21T21:10:36.600] [INFO] default - outputPath: F:\mylearn\myexample\example\node\src\node\ffmpeg\output_1695301832246.mp4
+[2023-09-21T21:10:36.601] [INFO] default - 文件已删除
+[2023-09-21T21:10:36.601] [INFO] default - 源文件已删除
+[2023-09-21T21:11:48.410] [INFO] default - 服务器已启动，监听端口 30002
+[2023-09-21T21:11:48.411] [INFO] default - F:\mylearn\myexample\example\node\src\node\ffmpeg
+[2023-09-21T21:11:48.416] [INFO] default - 端口 8080 未被占用
+[2023-09-21T21:11:48.417] [INFO] default - Server is running on port 8000
+[2023-09-21T21:12:06.785] [INFO] default - 转码完成
+[2023-09-21T21:12:06.785] [INFO] default - outputPath: F:\mylearn\myexample\example\node\src\node\ffmpeg\output_1695301921658.mp4
+[2023-09-21T21:12:06.786] [INFO] default - 文件已删除
+[2023-09-21T21:12:06.786] [INFO] default - 源文件已删除
+[2023-09-21T21:14:05.096] [INFO] default - 服务器已启动，监听端口 30001
+[2023-09-21T21:14:09.165] [INFO] default - 服务器已启动，监听端口 30001
+[2023-09-21T21:14:11.401] [INFO] default - 服务器已启动，监听端口 30001
+[2023-09-21T21:14:12.357] [INFO] default - 服务器已启动，监听端口 30001
+[2023-09-21T21:14:14.154] [INFO] default - 服务器已启动，监听端口 30001
+[2023-09-21T21:14:36.268] [INFO] default - 转码完成
+[2023-09-21T21:14:36.269] [INFO] default - outputPath: F:\mylearn\myexample\example\node\src\node\ffmpeg\output_1695302071458.mp4
+[2023-09-21T21:14:36.269] [INFO] default - 文件已删除
+[2023-09-21T21:14:36.269] [INFO] default - 源文件已删除
+[2023-09-21T21:15:21.508] [INFO] default - 服务器已启动，监听端口 30001
+[2023-09-21T21:15:24.426] [INFO] default - 服务器已启动，监听端口 30001
+[2023-09-21T21:15:44.097] [INFO] default - 转码完成
+[2023-09-21T21:15:44.097] [INFO] default - outputPath: F:\mylearn\myexample\example\node\src\node\ffmpeg\output_1695302138753.mp4
+[2023-09-21T21:15:44.098] [INFO] default - 文件已删除
+[2023-09-21T21:15:44.098] [INFO] default - 源文件已删除
+[2023-09-21T21:15:51.094] [INFO] default - 服务器已启动，监听端口 30001
+[2023-09-21T21:16:25.538] [INFO] default - 服务器已启动，监听端口 30001
+[2023-09-21T21:16:30.453] [INFO] default - 服务器已启动，监听端口 30001

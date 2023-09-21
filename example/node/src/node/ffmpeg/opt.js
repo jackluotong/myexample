@@ -112,14 +112,16 @@ app.post('/convert', upload.single('file'), async (req, res) => {
         })
         .run();
     });
-    logger.info("outputPath: " + outputPath,uploadedFile);
+    logger.info("outputPath: " + outputPath);
     res.setHeader('Content-Type', 'video/mp4');
     res.sendFile(outputPath);
 
-    await Promise.race([
-      fs.promises.unlink(outputPath),
-      fs.promises.unlink(uploadedFile.path),
-    ]);
+    // await Promise.all([
+    //   fs.promises.unlink(outputPath),
+    //   fs.promises.unlink(uploadedFile.path),
+    // ]);
+    await fs.promises.unlink(outputPath),
+    await fs.promises.unlink(uploadedFile.path),
 
     logger.info('文件已删除');
     logger.info('源文件已删除');

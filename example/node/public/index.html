@@ -4,8 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><%=htmlWebpackPlugin.options.title%></title>
-    <script src="<%= htmlWebpackPlugin.files.js %>"></script>
+    <title>transfer</title>
     <style>
       .output-wrapper{
         display: grid;
@@ -39,37 +38,47 @@
 <script>
 const videoInput = document.getElementById('videoInput');
 const recordDom = document.getElementsByClassName('content-wrapper')[0];
-const infoList = []; // 用于存储消息列表
+const infoList = []; 
+
+async function uploadAndConvertVideo(blob) {
+  const formData = new FormData();
+  formData.append('file', blob, 'video.mp4'); 
+
+  try {
+    let myInit = {
+      method: "POST",
+      mode: "cors",
+      cache: "default",
+      body: formData
+    };
+    addInfo('转码开始');
+    const response = await fetch('http://127.0.0.1:30002/convert', myInit);
+
+    if (response.ok) {
+      const videoBlob = await response.blob();
+      console.log(videoBlob);  
+      downloadFile(videoBlob);      
+      addInfo('转码成功');
+    } else {
+      addInfo('视频转码失败');
+    }
+  } catch (error) {
+    addInfo('发生错误:', error);
+  }
+}
 
 videoInput.addEventListener('change', async () => {
   const selectedFile = videoInput.files[0];
-
+  console.log(selectedFile);
   if (selectedFile) {
-    const formData = new FormData();
-    formData.append('file', selectedFile);
-
-    try {
-      let myInit = {
-        method: "POST",
-        mode: "cors",
-        cache: "default",
-        body: formData
-      };
-      addInfo('转码开始');
-      const response = await fetch('http://127.0.0.1:30001/convert', myInit);
-
-      if (response.ok) {
-        const videoBlob = await response.blob();
-        console.log(videoBlob);        
-        addInfo('转码成功');
-      } else {
-        addInfo('视频转码失败');
-      }
-    } catch (error) {
-      addInfo('发生错误:', error);
-    }
+    const fileBlob = new Blob([selectedFile], { type: selectedFile.type });
+    await uploadAndConvertVideo(fileBlob);
   }
 });
+
+
+
+
 
 function downloadFile(blob) {
   var url = window.URL.createObjectURL(blob);
@@ -88,7 +97,6 @@ function addInfo(message) {
   messageElement.style.color = '#ffff';
   messageElement.innerHTML = `${timestamp} -- ${message}`;
 
-  // 将新消息追加到消息列表中
   infoList.push(message);
   recordDom.appendChild(messageElement);
 }

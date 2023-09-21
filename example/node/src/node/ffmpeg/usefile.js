@@ -25,6 +25,7 @@ log4js.configure({
 const logger = log4js.getLogger();
 
 
+
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, 'uploads/') 
@@ -81,7 +82,7 @@ app.post('/convert', upload.single('file'), (req, res) => {
   })
   .on('error', (err) => {
     logger.error('转码出错',err);
-    res.status(500).send('[Ffmpeg]转码出错了');
+    res.status(500).send({msg:'[Ffmpeg]转码出错了',err:err});
   })
   .run();
 
@@ -89,8 +90,9 @@ app.post('/convert', upload.single('file'), (req, res) => {
 
 app.listen(port, () => {
     logger.info(`服务器已启动，监听端口 ${port}`);
-    logger.info(path.join(__dirname));
+    // logger.info(path.resolve(__dirname),path);
 });
+
 
 
 
