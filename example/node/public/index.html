@@ -52,7 +52,7 @@ async function uploadAndConvertVideo(blob) {
       body: formData
     };
     addInfo('转码开始');
-    const response = await fetch('http://127.0.0.1:30002/convert', myInit);
+    const response = await fetch('http://127.0.0.1:30001/convert', myInit);
 
     if (response.ok) {
       const videoBlob = await response.blob();
