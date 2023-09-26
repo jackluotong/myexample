@@ -13,6 +13,7 @@ const cors = require('cors');
 const multer = require('multer');
 ffmpeg.setFfmpegPath('./ffmpeg.exe');
 const log4js = require('log4js');
+const { spawn } = require('child_process');
 
 log4js.configure({
   appenders: {
@@ -24,7 +25,7 @@ log4js.configure({
 
 const logger = log4js.getLogger();
 
-
+logger.info(spawn)
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
