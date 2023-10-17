@@ -1,44 +1,51 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+  <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-</head>
-<body>
-<input type="file" id="videoInput">
-<video id="outputVideo" controls></video>
+  </head>
+  <body>
+    <input type="file" id="videoInput">
+    <video id="outputVideo" controls></video>
 
-<script>
-const videoInput = document.getElementById('videoInput');
-const outputVideo = document.getElementById('outputVideo');
-videoInput.addEventListener('change', async () => {
-  const selectedFile = videoInput.files[0];
-  
-  if (selectedFile) {
-    const formData = new FormData();
-    formData.append('file', selectedFile);
-    console.log(selectedFile,'[selectedFile]')
-    try {
-      const response = await fetch('http://127.0.0.1:30001/convert', {
-        method: 'POST',
-        body: formData
+    <script>
+      const videoInput = document.getElementById('videoInput');
+      const outputVideo = document.getElementById('outputVideo');
+      videoInput.addEventListener('change', async () => {
+        const selectedFile = videoInput.files[0];
+
+        if (selectedFile) {
+          const formData = new FormData();
+          formData.append('file', selectedFile);
+          console.log(selectedFile, '[selectedFile]')
+          try {
+            const response = await fetch('http://127.0.0.1:30001/convert', {
+              method: 'POST',
+              body: formData
+            });
+            console.log(response, '[response]')
+            if (response.ok) {
+              const videoBlob = await response.blob();
+              const videoUrl = URL.createObjectURL(videoBlob);
+              outputVideo.src = videoUrl;
+            } else {
+              console.error('视频转码失败');
+            }
+          } catch (error) {
+            console.error('发生错误:', error);
+          }
+        }
       });
-      console.log(response,'[response]')
-      if (response.ok) {
-        const videoBlob = await response.blob();
-        const videoUrl = URL.createObjectURL(videoBlob);
-        outputVideo.src = videoUrl;
-      } else {
-        console.error('视频转码失败');
-      }
-    } catch (error) {
-      console.error('发生错误:', error);
-    }
-  }
-});
-</script>
+      fetch("../package.json").then(function (response) {
+        return response.json();
+      }).then(function (data) {
+        console.log(data);
+      }).catch(function (error) {
+        console.error("Error fetching JSON: " + error);
+      });
+    </script>
 
-</body>
+  </body>
 </html>
