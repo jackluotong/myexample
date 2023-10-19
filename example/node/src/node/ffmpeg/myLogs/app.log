@@ -681,3 +681,81 @@
 [2023-09-26T16:57:16.777] [INFO] default - 服务器已启动，监听端口 30001
 [2023-09-26T16:57:40.004] [INFO] default - [Function: spawn]
 [2023-09-26T16:57:40.012] [INFO] default - 服务器已启动，监听端口 30001
+[2023-10-17T17:03:14.053] [INFO] default - [Function: spawn]
+[2023-10-17T17:03:14.059] [INFO] default - 服务器已启动，监听端口 30001
+[2023-10-17T17:03:14.059] [INFO] default - F:\mylearn\myexample\example\node\src\node\ffmpeg {
+  resolve: [Function: resolve],
+  normalize: [Function: normalize],
+  isAbsolute: [Function: isAbsolute],
+  join: [Function: join],
+  relative: [Function: relative],
+  toNamespacedPath: [Function: toNamespacedPath],
+  dirname: [Function: dirname],
+  basename: [Function: basename],
+  extname: [Function: extname],
+  format: [Function: bound _format],
+  parse: [Function: parse],
+  sep: '\\',
+  delimiter: ';',
+  win32: [Circular],
+  posix: {
+    resolve: [Function: resolve],
+    normalize: [Function: normalize],
+    isAbsolute: [Function: isAbsolute],
+    join: [Function: join],
+    relative: [Function: relative],
+    toNamespacedPath: [Function: toNamespacedPath],
+    dirname: [Function: dirname],
+    basename: [Function: basename],
+    extname: [Function: extname],
+    format: [Function: bound _format],
+    parse: [Function: parse],
+    sep: '/',
+    delimiter: ':',
+    win32: [Circular],
+    posix: [Circular],
+    _makeLong: [Function: toNamespacedPath]
+  },
+  _makeLong: [Function: toNamespacedPath]
+}
+[2023-10-17T17:03:47.861] [INFO] default - 服务器已启动，监听端口 30001
+[2023-10-17T17:03:47.863] [INFO] default - F:\mylearn\myexample\example\node\src\node\ffmpeg {
+  resolve: [Function: resolve],
+  normalize: [Function: normalize],
+  isAbsolute: [Function: isAbsolute],
+  join: [Function: join],
+  relative: [Function: relative],
+  toNamespacedPath: [Function: toNamespacedPath],
+  dirname: [Function: dirname],
+  basename: [Function: basename],
+  extname: [Function: extname],
+  format: [Function: bound _format],
+  parse: [Function: parse],
+  sep: '\\',
+  delimiter: ';',
+  win32: [Circular],
+  posix: {
+    resolve: [Function: resolve],
+    normalize: [Function: normalize],
+    isAbsolute: [Function: isAbsolute],
+    join: [Function: join],
+    relative: [Function: relative],
+    toNamespacedPath: [Function: toNamespacedPath],
+    dirname: [Function: dirname],
+    basename: [Function: basename],
+    extname: [Function: extname],
+    format: [Function: bound _format],
+    parse: [Function: parse],
+    sep: '/',
+    delimiter: ':',
+    win32: [Circular],
+    posix: [Circular],
+    _makeLong: [Function: toNamespacedPath]
+  },
+  _makeLong: [Function: toNamespacedPath]
+}
+[2023-10-17T17:04:10.174] [INFO] default - 服务器已启动，监听端口 30001
+[2023-10-17T17:04:12.714] [INFO] default - 服务器已启动，监听端口 30001
+[2023-10-17T17:06:15.836] [INFO] default - 转码完成
+[2023-10-17T17:06:16.838] [INFO] default - 文件已删除
+[2023-10-17T17:06:16.839] [INFO] default - 源文件已删除

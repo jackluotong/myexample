@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Video Upload and Transcode</title>
+</head>
+<body>
+  <form id="uploadForm">
+    <input type="file" id="videoFile" accept=".mkv">
+    <button type="button" id="uploadButton">Upload and Transcode</button>
+  </form>
+  <p id="statusMessage"></p>
+
+  <script>
+  document.getElementById("uploadButton").addEventListener("click", function () {
+  const fileInput = document.getElementById("videoFile");
+  const videoFile = fileInput.files[0];
+
+  if (!videoFile) {
+    document.getElementById("statusMessage").textContent = "Please select a video file.";
+    return;
+  }
+
+  // 创建一个新的 FormData 对象
+  const formData = new FormData();
+
+  // 手动附加文件数据
+  formData.append("videoData", videoFile, videoFile.name);
+  window.a=formData;
+  fetch("http://localhost:9000/transcode", {
+    method: "POST",
+    body: formData,
+  })
+    .then((response) => {
+      console.log(response);
+      response})
+    .then((data) => {
+      console.log(data,'[data]');
+      document.getElementById("statusMessage").textContent = data;
+    })
+    .catch((error) => {
+      console.error(error);
+      document.getElementById("statusMessage").textContent = "Error during transcoding.";
+    });
+});
+
+  </script>
+</body>
+</html>
