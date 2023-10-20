@@ -31,7 +31,7 @@ int main()
   auto start = std::chrono::high_resolution_clock::now();
   performOperations();
   auto stop = std::chrono::high_resolution_clock::now();
-  auto duration = std::chrono::duration_cast<std::chrono::microseconds>(stop - start);
-  std::cout << "C++ Execution Time: " << duration.count() << " microseconds" << std::endl;
+  auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(stop - start);
+  std::cout << "C++ Execution Time: " << duration.count() << " milliseconds" << std::endl;
   return 0;
 }
