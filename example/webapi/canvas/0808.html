@@ -1,71 +1,80 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+  <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-</head>
-<body>
+  </head>
+  <body>
     <canvas id="canvas"></canvas>
 
-</body>
-<script>
-const canvas = document.getElementById('canvas');
-const context = canvas.getContext('2d');
-const dashLength = 10; // 虚线的间隔
+  </body>
+  <script>
+    const canvas = document.getElementById('canvas');
+    const context = canvas.getContext('2d');
+    const dashLength = 10; // 虚线的间隔
 
-const startY = 50; // 起始 Y 坐标
-const lineSpacing = 40; // 虚线之间的垂直间隔
-const maxLength = 100; // 最大的虚线长度
+    const startY = 50; // 起始 Y 坐标
+    const lineSpacing = 40; // 虚线之间的垂直间隔
+    const maxLength = 100; // 最大的虚线长度
 
-const lines = [
-  { number: '1', y: startY },
-  { number: '2', y: startY + lineSpacing },
-  { number: '3', y: startY + lineSpacing * 2 },
-  { number: '4', y: startY + lineSpacing * 3 },
-  { number: '5', y: startY + lineSpacing * 4 }
-];
+    const lines = [
+      {
+        number: '1',
+        y: startY
+      },
+      {
+        number: '2',
+        y: startY + lineSpacing
+      },
+      {
+        number: '3',
+        y: startY + lineSpacing * 2
+      },
+      {
+        number: '4',
+        y: startY + lineSpacing * 3
+      }, {
+        number: '5',
+        y: startY + lineSpacing * 4
+      }
+    ];
 
-let currentLength = 1; // 当前的虚线长度
+    let currentLength = 1; // 当前的虚线长度
 
-function drawDashedLine(x, y, length, text) {
-  context.strokeStyle = 'blue';
-  context.lineWidth = 2;
-  context.lineCap = 'round';
-  context.lineJoin = 'round';
-  context.setLineDash([dashLength, dashLength]);
-  context.lineDashOffset = 0;
-  context.beginPath();
-  context.moveTo(x, y);
-  context.lineTo(x + length, y);
-  context.stroke();
+    function drawDashedLine(x, y, length, text) {
+      context.strokeStyle = 'blue';
+      context.lineWidth = 2;
+      context.lineCap = 'round';
+      context.lineJoin = 'round';
+      context.setLineDash([dashLength, dashLength]);
+      context.lineDashOffset = 0;
+      context.beginPath();
+      context.moveTo(x, y);
+      context.lineTo(x + length, y);
+      context.stroke();
 
-  // 绘制数据文本
-  context.fillStyle = 'black';
-  context.font = '1px Arial';
-  context.fillText(text, x + length + 10, y);
-}
-
-function animate() {
-  lines.forEach(line => {
-    if (currentLength <= maxLength) {
-      drawDashedLine(50, line.y, currentLength, line.number);
+      // 绘制数据文本
+      context.fillStyle = 'black';
+      context.font = '1px Arial';
+      context.fillText(text, x + length + 10, y);
     }
-  });
 
-  if (currentLength <= maxLength) {
-    currentLength += 1;
-    requestAnimationFrame(animate);
-  }
-}
+    function animate() {
+      lines.forEach(line => {
+        if (currentLength <= maxLength) {
+          drawDashedLine(50, line.y, currentLength, line.number);
+        }
+      });
 
-// 启动动画
-animate();
+      if (currentLength <= maxLength) {
+        currentLength += 1;
+        requestAnimationFrame(animate);
+      }
+    }
 
-
-
-
-
-</script>
+    // 启动动画
+    animate();
+  </script>
 </html>

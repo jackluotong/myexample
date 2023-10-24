@@ -1,5 +1,5 @@
 {
-  "name": "express-demo",
+  "name": "ffmpeg-transfer",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -20,7 +20,7 @@
     "os": "^0.1.2"
   },
   "bin": {
-    "transfer-app": "src/ffmpeg/usefile.js"
+    "transfer-app": "src/second/c.js"
   },
   "pkg": {
     "scripts": [],

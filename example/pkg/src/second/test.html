@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Video Upload and Transcode</title>
+  </head>
+  <body>
+    <form id="uploadForm">
+      <input type="file" id="videoFile" accept=".mkv">
+      <button type="button" id="uploadButton">Upload and Transcode</button>
+    </form>
+    <p id="statusMessage"></p>
+
+    <script>
+      document.getElementById("uploadButton").addEventListener("click", function () {
+        const fileInput = document.getElementById("videoFile");
+        const videoFile = fileInput.files[0];
+
+        if (! videoFile) {
+          document.getElementById("statusMessage").textContent = "Please select a video file.";
+          return;
+        }
+
+        const formData = new FormData();
+
+        formData.append("videoData", videoFile, videoFile.name);
+        fetch("http://localhost:9000/transcode", {
+          method: "POST",
+          body: formData
+        }).then(async (r) => {
+
+          let b = await r.blob()
+          const url = window.URL.createObjectURL(b);
+
+          const a = document.createElement("a");
+          a.href = url;
+          a.download = "output.mp4";
+          window.a = a;
+          a.click();
+          window.URL.revokeObjectURL(url);
+
+        }).catch((error) => {
+          console.error(error);
+          document.getElementById("statusMessage").textContent = "Error during transcoding.";
+        });
+      });
+    </script>
+  </body>
+</html>

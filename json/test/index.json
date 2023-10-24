@@ -1,0 +1,10 @@
+{
+  "A_Module": {
+    "function": {
+      "add": {
+        "p": "a,b",
+        "return": "a+b"
+      }
+    }
+  }
+}
