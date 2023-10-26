@@ -88,10 +88,8 @@ app.post("/convert", upload.single("file"), (req, res) => {
     .run();
 });
 app.get("/", (req, res) => {
-  if (req.query.name === "luotong") {
-    res.send({ msg: "success" });
-    logger.info("req", req.query);
-  }
+  res.send({ msg: "success" });
+  logger.info("req", req.query);
 });
 app.listen(port, () => {
   logger.info(`服务器已启动，监听端口 ${port}`);

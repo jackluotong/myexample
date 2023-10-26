@@ -1,3 +1,7 @@
+/**
+ * @description using queue
+ */
+
 const express = require("express");
 const app = express();
 const ffmpeg = require("fluent-ffmpeg");
@@ -9,8 +13,10 @@ const { Readable } = require("stream");
 const path = require("path");
 const log4js = require("log4js");
 const os = require("os");
-const logDirectory = path.join(os.homedir(), "ffmpeg-transfer"); //此方法适合当app跑在客户端时调用日志
-
+const logDirectory = path.join(os.homedir(), "ffmpeg-transfer-queue");
+const Bull = require("bull");
+app.use(cors());
+app.use(bodyParser.json());
 log4js.configure({
   appenders: {
     file: {
@@ -21,16 +27,33 @@ log4js.configure({
   },
   categories: { default: { appenders: ["file", "console"], level: "info" } },
 });
-
 const logger = log4js.getLogger();
-app.use(cors());
-const port = 9000;
+const port = 8100;
+const videoTranscodeQueue = new Bull("videoTranscodeQueue");
+videoTranscodeQueue.process(async (job) => {
+  logger.info("job", job);
+  const { videoBuffer, outputPath } = job.data;
 
-app.use(bodyParser.json());
+  return new Promise((resolve, reject) => {
+    ffmpeg()
+      .input(videoBuffer)
+      .inputFormat("matroska")
+      .output(outputPath)
+      .on("end", (s) => {
+        resolve(s);
+      })
+      .on("error", (err) => {
+        reject(err);
+      })
+      .run();
+  });
+});
+
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 
 app.post("/transcode", upload.single("videoData"), (req, res) => {
+  logger.info(req.file, "req");
   if (!req.file) {
     res.status(400).json({ error: "No video data provided." });
     logger.error("[upload error]:No video data provided.");
@@ -38,54 +61,34 @@ app.post("/transcode", upload.single("videoData"), (req, res) => {
   }
 
   const videoBuffer = req.file.buffer;
-  const videoStream = new Readable();
-  videoStream.push(videoBuffer);
-  videoStream.push(null);
-
   const outputPath = "output.mp4";
-  const b_time = new Date();
-  ffmpeg()
-    .input(videoStream)
-    .inputFormat("matroska")
-    .output(outputPath)
-    .on("end", () => {
-      const outputData = fs.readFileSync(outputPath);
 
-      res.setHeader("Content-Type", "video/mp4");
-      res.send(outputData);
-      const e_time = new Date();
-      const timeDifferenceInMilliseconds = e_time - b_time;
+  videoTranscodeQueue.add({
+    videoBuffer,
+    outputPath,
+  });
 
-      const timeDifferenceInSeconds = timeDifferenceInMilliseconds / 1000;
-      const fileInfo = {
-        size: `${outputData.byteLength / 1024 / 1024}.MB`, // bit => byte => k byte => m byte
-      };
-      logger.info("[transfer using time:]", timeDifferenceInSeconds);
-      logger.info("[file info:]", fileInfo);
-      fs.unlinkSync(outputPath);
-    })
-    .on("error", (err) => {
-      logger.error("[transfer error]:", err);
-      res.status(500).json({ error: "Error during transcoding." });
-    })
-    .run();
+  // res.status(202).json({ message: "Transcoding request received and queued." });
 });
 
-app.get("/testing", (req, res) => {
-  const successText = `<h1 style="
-  color: #fff;
-  background-color: #f90;
-  border-color: #f90;
-  width:160px;
-  height:60px;"> 连接成功 </h1>`;
-  // res.json({
-  //   states: 200,
-  // });
-  res.send(successText);
+videoTranscodeQueue.on("completed", (job) => {
+  const e_time = new Date();
+  const timeDifferenceInMilliseconds = e_time - job.timestamp;
+  const timeDifferenceInSeconds = timeDifferenceInMilliseconds / 1000;
+  const fileInfo = {
+    size: `${job.returnvalue.byteLength / 1024 / 1024}.MB`,
+  };
+  logger.info("[transfer using time:]", timeDifferenceInSeconds);
+  logger.info("[file info:]", fileInfo);
+
+  fs.unlinkSync(job.data.outputPath);
 });
 
+app.get("/test", (req, res) => {
+  res.status(200).json({ info: "success" });
+});
 app.listen(port, () => {
-  logger.info(`[connect success]:Connecting to ${port}`);
+  logger.info(`Server is running on port ${port}`);
 });
 
 const net = require("net");
@@ -109,7 +112,7 @@ function isPortTaken(port) {
   });
 }
 
-const portToCheck = 9000;
+const portToCheck = 8100;
 isPortTaken(portToCheck).then((taken) => {
   if (taken) {
     logger.info(`[port]:端口 ${portToCheck} 已被占用`);
