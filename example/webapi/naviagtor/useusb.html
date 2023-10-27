@@ -1,0 +1,39 @@
+<!-- HTML -->
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>WebUSB Example</title>
+  </head>
+  <body>
+    <button id="connectButton">Connect to USB Device</button>
+
+    <script>
+      document.getElementById('connectButton').addEventListener('click', async () => {
+        try { // 请求USB设备访问权限
+          const device = await navigator.usb.requestDevice({filters: []});
+
+          // 连接到USB设备
+          await device.open();
+
+          // 配置设备（如果需要）
+          await device.selectConfiguration(1);
+
+          // 打开设备的接口端点
+          await device.claimInterface(0);
+
+          // 发送和接收数据
+          const result = await device.transferOut(1, new Uint8Array([0x01, 0x02]));
+          console.log('Sent data:', result);
+
+          const data = await device.transferIn(1, 64);
+          console.log('Received data:', new Uint8Array(data.data.buffer));
+
+          // 释放设备
+          await device.close();
+        } catch (error) {
+          console.error('USB error:', error);
+        }
+      });
+    </script>
+  </body>
+</html>

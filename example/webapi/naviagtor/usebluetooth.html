@@ -1,0 +1,49 @@
+<!-- HTML -->
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Web Bluetooth Example</title>
+  </head>
+  <body>
+    <button id="connectButton">Connect to Bluetooth Device</button>
+
+    <script>
+      document.getElementById('connectButton').addEventListener('click', async () => {
+        try { // 请求蓝牙设备访问权限
+          const device = await navigator.bluetooth.requestDevice({
+            filters: [
+              {
+                services: ['1121']
+              }
+            ]
+          });
+
+          // 连接到蓝牙设备
+          const server = await device.gatt.connect();
+
+          // 获取服务和特征
+          const service = await server.getPrimaryService('your_service_uuid_here');
+          const characteristic = await service.getCharacteristic('your_characteristic_uuid_here');
+
+          // 读取或写入数据
+          const data = new Uint8Array([0x01, 0x02]);
+          await characteristic.writeValue(data);
+
+          // 监听数据变化
+          characteristic.addEventListener('characteristicvaluechanged', (event) => {
+            const value = new Uint8Array(event.target.value.buffer);
+            console.log('Received data:', value);
+          });
+
+          // 启用通知
+          await characteristic.startNotifications();
+
+          // 断开连接
+          await device.gatt.disconnect();
+        } catch (error) {
+          console.error('Bluetooth error:', error);
+        }
+      });
+    </script>
+  </body>
+</html>

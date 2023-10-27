@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>test wasm</title>
+  </head>
+  <body>
+    <div>
+      <button onclick="loadWasm()">wasm</button>
+      <button onclick="t()">js</button>
+    </div>
+    <script>
+
+      let a = 500000111;
+      function loadWasm(path = '../c++/example.wasm') {
+        return fetch(path).then(r => r.arrayBuffer()).then(WebAssembly.instantiate).then(module => {
+          const instance = module.instance;
+          let s_time = new Date();
+          const result = instance.exports.testF(a)
+          let e_time = new Date();
+          console.log(
+            'result:',
+            result,
+            'time:',
+            `${
+              (e_time - s_time) / 1000
+            }秒`
+          )
+
+        }).catch(e => {
+          console.log(e)
+        })
+      }
+      function jsF() {
+        let result = 0;
+        for (let i = 0; i < a; i++) {
+          result += i;
+        }
+        return result;
+      }
+      function t() {
+        let s_time = new Date();
+        let e_time = new Date();
+        console.log(
+          'result:',
+          this.jsF(),
+          'time:',
+          `${
+            (e_time - s_time) / 1000
+          }秒`
+        )
+      };
+
+
+      // emcc first.c -Os -s WASM=1 -s SIDE_MODULE=1 -o first.wasm
+      // emcc first.c -o first1.wasm
+    </script>
+  </body>
+</html>
