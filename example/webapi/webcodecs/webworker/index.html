@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Web Worker Demo</title>
+  </head>
+  <body>
+    <h1>Web Worker Demo</h1>
+    <button id="startWorker">Start Worker</button>
+    <button id="stopWorker">stop Worker</button>
+    <p>
+      <span id="result"></span>
+    </p>
+
+    <script>
+      // 创建一个 Web Worker
+      const myWorker = new Worker('worker.js', {name: 'video-recorder-worker'});
+
+      // 获取页面元素
+      const startWorkerButton = document.getElementById('startWorker');
+      const stopWorkerButton = document.getElementById('stopWorker');
+      const resultSpan = document.getElementById('result');
+
+      // 当按钮点击时，向 Worker 发送消息
+      startWorkerButton.addEventListener('click', function () {
+        myWorker.postMessage({type: 'start'});
+      });
+      stopWorkerButton.addEventListener('click', function () {
+        myWorker.postMessage({type: 'stop'});
+        myWorker.terminate();
+      })
+      // 监听来自 Worker 的消息
+      myWorker.onmessage = function (e) {
+        resultSpan.textContent = e.data;
+      };
+    </script>
+  </body>
+</html>

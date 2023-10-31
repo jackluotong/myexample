@@ -1,61 +1,21 @@
 {
     "workbench.colorCustomizations": {
-        "activityBar.background": "#0b240a",
-        "titleBar.activeBackground": "#163806",
-        "titleBar.activeForeground": "#F9FBF9"
+        "activityBar.background": "#000000",
+        "titleBar.activeBackground": "#000002",
+        "titleBar.activeForeground": "#f5f3f8",
     },
-    "liveServer.settings.port": 5502,
     "editor.formatOnSave": true,
-    "files.associations": {
-        "*.cjson": "jsonc",
-        "*.wxss": "css",
-        "*.wxs": "javascript",
-        ".eslintrc": "json",
-        "*.vue": "vue",
-        "xstring": "cpp",
-        ".js": "javascript",
-        "atomic": "cpp",
-        "bit": "cpp",
-        "cctype": "cpp",
-        "clocale": "cpp",
-        "cmath": "cpp",
-        "compare": "cpp",
-        "concepts": "cpp",
-        "cstddef": "cpp",
-        "cstdint": "cpp",
-        "cstdio": "cpp",
-        "cstdlib": "cpp",
-        "cstring": "cpp",
-        "ctime": "cpp",
-        "cwchar": "cpp",
-        "exception": "cpp",
-        "fstream": "cpp",
-        "initializer_list": "cpp",
-        "ios": "cpp",
-        "iosfwd": "cpp",
-        "iostream": "cpp",
-        "istream": "cpp",
-        "iterator": "cpp",
-        "limits": "cpp",
-        "memory": "cpp",
-        "new": "cpp",
-        "ostream": "cpp",
-        "stdexcept": "cpp",
-        "streambuf": "cpp",
-        "string": "cpp",
-        "system_error": "cpp",
-        "tuple": "cpp",
-        "type_traits": "cpp",
-        "typeinfo": "cpp",
-        "utility": "cpp",
-        "xfacet": "cpp",
-        "xiosbase": "cpp",
-        "xlocale": "cpp",
-        "xlocinfo": "cpp",
-        "xlocnum": "cpp",
-        "xmemory": "cpp",
-        "xstddef": "cpp",
-        "xtr1common": "cpp",
-        "xutility": "cpp"
-    }
+    "workbench.colorTheme": "One Dark Modern Classic",
+    "workbench.iconTheme": "vscode-icons",
+    "editor.tokenColorCustomizations": {
+        "[Monokai]": {
+            "comments": "#f00c58"
+        },
+        "[*Dark*]": {
+            "variables": "#d4c7c7"
+        },
+        "[Abyss][Red]": {
+            "keywords": "#6ae703"
+        }
+    }    
 }

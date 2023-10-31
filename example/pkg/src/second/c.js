@@ -9,7 +9,7 @@ const { Readable } = require("stream");
 const path = require("path");
 const log4js = require("log4js");
 const os = require("os");
-const logDirectory = path.join(os.homedir(), "ffmpeg-transfer"); //此方法适合当app跑在客户端时调用日志
+const logDirectory = path.join(os.homedir(), "ffmpeg-transfer");
 
 log4js.configure({
   appenders: {
@@ -30,19 +30,22 @@ app.use(bodyParser.json());
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 
+const childProcess = require("child_process");
+
 app.post("/transcode", upload.single("videoData"), (req, res) => {
   if (!req.file) {
     res.status(400).json({ error: "No video data provided." });
     logger.error("[upload error]:No video data provided.");
     return;
   }
-
+  const fileName = "test1.mp4";
   const videoBuffer = req.file.buffer;
   const videoStream = new Readable();
   videoStream.push(videoBuffer);
   videoStream.push(null);
 
   const outputPath = "output.mp4";
+  const cmd = `ffmpeg.exe -i "${outputPath}" -f null -`;
   const b_time = new Date();
   ffmpeg()
     .input(videoStream)
@@ -50,8 +53,14 @@ app.post("/transcode", upload.single("videoData"), (req, res) => {
     .output(outputPath)
     .on("end", () => {
       const outputData = fs.readFileSync(outputPath);
+      getVideoInfo(cmd, true);
+      res.setHeader(
+        "Content-Disposition",
+        `attachment; filename="${fileName}"`
+      );
 
       res.setHeader("Content-Type", "video/mp4");
+
       res.send(outputData);
       const e_time = new Date();
       const timeDifferenceInMilliseconds = e_time - b_time;
@@ -62,7 +71,9 @@ app.post("/transcode", upload.single("videoData"), (req, res) => {
       };
       logger.info("[transfer using time:]", timeDifferenceInSeconds);
       logger.info("[file info:]", fileInfo);
-      fs.unlinkSync(outputPath);
+      const deleFileTimer = setTimeout(() => {
+        fs.unlinkSync(outputPath);
+      }, 100);
     })
     .on("error", (err) => {
       logger.error("[transfer error]:", err);
@@ -117,3 +128,45 @@ isPortTaken(portToCheck).then((taken) => {
     logger.info(`[port]:端口 ${portToCheck} 未被占用`);
   }
 });
+
+function getVideoInfo(cmd, log) {
+  childProcess.exec(cmd, (error, stdout, stderr) => {
+    if (error) {
+      logger.error("Error running ffmpeg: " + error);
+      return;
+    }
+
+    const lines = stderr.split("\n");
+    const videoInfo = {};
+    // logger.info("[lines]", lines);
+
+    lines.forEach((line) => {
+      if (line.includes("Stream #0:0")) {
+        if (line.includes("Video:")) {
+          const parts = line.split("Video:")[1].split(",");
+          parts.forEach((part) => {
+            part = part.trim();
+            if (part.includes("x")) {
+              const resolution = part.split(" ")[0];
+              const [width, height] = resolution.split("x");
+              videoInfo.width = parseInt(width);
+              videoInfo.height = parseInt(height);
+            }
+            if (part.includes("bitrate")) {
+              videoInfo.bitrate = part;
+            }
+            if (part.includes("fps")) {
+              videoInfo.framerate = part.split("fps")[0];
+            }
+            if (part.includes("Codec:")) {
+              videoInfo.codec = part.split("Codec:")[1].trim();
+            }
+          });
+        }
+      }
+    });
+    if (log) {
+      logger.info("Video Info:", videoInfo);
+    }
+  });
+}

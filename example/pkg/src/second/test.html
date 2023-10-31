@@ -32,7 +32,7 @@
   <body>
     <form id="uploadForm">
       <div>
-        <label>转码服务地址：</label><input type="text" id="ajaxUrl" placeholder="请输入服务器地址" value="http://localhost:8100/transcode">
+        <label>转码服务地址：</label><input type="text" id="ajaxUrl" placeholder="请输入服务器地址" value="http://localhost:9000/transcode">
       </div>
       <div>
         <input type="file" id="videoFile" accept=".mkv">
@@ -48,7 +48,11 @@
       <div class="content-wrapper"></div>
     </div>
     <p>
-      <strong style="color: red;">此版本适用于ffmpeg服务器运行在客户端。</strong>
+      <strong style="color: red;">此版本适用于ffmpeg服务器运行在客户端</strong>
+
+    </p>
+    <p>
+      <strong style="color: red;">日志位于\Users\y\ffmpeg-transfer</strong>
     </p>
     <script>
 
@@ -64,11 +68,11 @@
 
         const fileInput = document.getElementById("videoFile");
         const videoFile = fileInput.files[0];
-
         if (! videoFile) {
           addInfo(false, 'Please select a video file.')
           return;
         }
+        const fileName = videoFile.name.replace('.mkv', '.mp4')
         addInfo(true, `转码前文件大小${
           (videoFile.size / 1024 / 1024).toFixed(4)
         }MB`);
@@ -83,7 +87,7 @@
         }).then(async (r) => {
           addInfo(true, '转码成功...');
           const e_time = new Date();
-          let b = await r.blob()
+          let b = await r.blob();
           addInfo(true, `转码后文件大小${
             (b.size / 1024 / 1024).toFixed(4)
           }MB`);
@@ -93,7 +97,7 @@
           const url = window.URL.createObjectURL(b);
           const a = document.createElement("a");
           a.href = url;
-          a.download = "output.mp4";
+          a.download = fileName;
           window.a = a;
           a.click();
           window.URL.revokeObjectURL(url);

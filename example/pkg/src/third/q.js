@@ -67,8 +67,6 @@ app.post("/transcode", upload.single("videoData"), (req, res) => {
     videoBuffer,
     outputPath,
   });
-
-  // res.status(202).json({ message: "Transcoding request received and queued." });
 });
 
 videoTranscodeQueue.on("completed", (job) => {
@@ -80,13 +78,14 @@ videoTranscodeQueue.on("completed", (job) => {
   };
   logger.info("[transfer using time:]", timeDifferenceInSeconds);
   logger.info("[file info:]", fileInfo);
-
   fs.unlinkSync(job.data.outputPath);
 });
 
 app.get("/test", (req, res) => {
+  logger.info("someone requesting");
   res.status(200).json({ info: "success" });
 });
+
 app.listen(port, () => {
   logger.info(`Server is running on port ${port}`);
 });

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- OpenCV.js 4.5.5 版本 -->
+    <!-- <script src='https://docs.opencv.org/4.5.5/opencv.js' async></script> -->
+    <input type="file" id="imageInput" accept="image/*">
+    <canvas id="outputCanvas"></canvas>
+    <script src="./opecv.js"></script>
+  </head>
+  <body>
+    <script>
+      console.log(cv);
+      // 在 OpenCV.js 加载完成后执行
+      cv.onRuntimeInitialized = function () { // 获取图像元素和输出 Canvas 元素
+        const imageInput = document.getElementById('imageInput');
+        const outputCanvas = document.getElementById('outputCanvas');
+        const ctx = outputCanvas.getContext('2d');
+
+        // 加载预训练的人脸检测器
+        const faceCascade = new cv.CascadeClassifier();
+        console.log('[faceCascade]', faceCascade)
+        faceCascade.load('haarcascade_frontalface_default.xml');
+
+        // 处理图像
+        imageInput.addEventListener('change', function (e) {
+          const file = e.target.files[0];
+
+          if (file) {
+            const reader = new FileReader();
+            reader.onload = function () { // 从文件中加载图像
+              const imageSrc = new Image();
+              imageSrc.src = reader.result;
+
+              // 在图像加载完成后进行处理
+              imageSrc.onload = function () { // 将图像绘制到 Canvas 上
+                outputCanvas.width = imageSrc.width;
+                outputCanvas.height = imageSrc.height;
+                ctx.drawImage(imageSrc, 0, 0);
+                console.log("[outputCanvas]", outputCanvas)
+                // 使用 OpenCV.js 进行图像处理
+                const src = cv.imread(outputCanvas);
+                // 从 Canvas 获取图像
+                console.log('[src]'.src)
+                // 进行人脸检测
+                const faces = new cv.RectVector();
+                console.log(faces, '[faces]')
+                faceCascade.detectMultiScale(src, faces, 1.1, 3, 0);
+
+                // 在 Canvas 上绘制人脸和标签
+                for (let i = 0; i < faces.size(); i++) {
+                  const faceRect = faces.get(i);
+                  ctx.strokeStyle = 'red';
+                  ctx.lineWidth = 2;
+                  ctx.strokeRect(faceRect.x, faceRect.y, faceRect.width, faceRect.height);
+                  ctx.font = '24px Arial';
+                  ctx.fillStyle = 'red';
+                  ctx.fillText('Face ' + (
+                    i + 1
+                  ), faceRect.x, faceRect.y - 10);
+                }
+
+                // 在 Canvas 上显示处理后的图像
+                cv.imshow(outputCanvas, src);
+
+                // 释放内存
+                src.delete();
+              };
+            };
+
+            reader.readAsDataURL(file);
+          }
+        });
+      };
+      function create() { // 创建一个 Mat
+        let mat = new cv.Mat()
+
+        // 创建一个 MatVector
+        let matVector = new cv.MatVector()
+
+        // 添加一个 Mat
+        matVector.push_back(mat)
+
+        // 获取 index 为 0 的 Mat
+        mat = matVector.get(0)
+
+        // 设置 index 为 0 的 Mat
+        matVector.set(0, mat)
+
+        // 删除 Mat
+        mat.delete()
+
+        // 删除 MatVector
+        matVector.delete()
+
+      }
+    </script>
+  </body>
+</html>
