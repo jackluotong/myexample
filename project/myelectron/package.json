@@ -26,7 +26,8 @@
     },
     "files": [
       "index.js",
-      "index.html"
+      "index.html",
+      "transfer.js"
     ],
     "win": {
       "target": "nsis"
