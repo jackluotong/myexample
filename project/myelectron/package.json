@@ -1,0 +1,55 @@
+{
+  "name": "electron",
+  "version": "1.0.30",
+  "description": "electron",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "electron .",
+    "clean:d": "rmdir /s /q dist",
+    "clean:n": "rmdir /s /q node_modules",
+    "build:w": "electron-builder --win --x64",
+    "build:m": "electron-builder --mac --x64",
+    "build:v": "npm version patch  && electron-builder --win --x64"
+  },
+  "author": "lt",
+  "license": "ISC",
+  "devDependencies": {
+    "electron": "27.0.3",
+    "electron-builder": "24.6.4"
+  },
+  "build": {
+    "appId": "v1.0.0-transfer",
+    "productName": "transfer",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "index.js",
+      "index.html"
+    ],
+    "win": {
+      "target": "nsis"
+    },
+    "mac": {
+      "target": "dmg"
+    },
+    "linux": {
+      "target": "AppImage"
+    }
+  },
+  "dependencies": {
+    "body-parser": "^1.20.2",
+    "child_process": "^1.0.2",
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
+    "finalhandler": "^1.2.0",
+    "fkill": "^8.1.1",
+    "fluent-ffmpeg": "^2.1.2",
+    "log4js": "^6.9.1",
+    "multer": "^1.4.5-lts.1",
+    "net": "^1.0.2",
+    "os": "^0.1.2",
+    "stream": "^0.0.2"
+  }
+}

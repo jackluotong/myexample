@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible"
+      content="IE=edge">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<head>
+  <title>Video Upload and Transcode</title>
+  <style>
+    #uploadForm {
+      background-color: rgba(136, 126, 126, 0.2);
+      width: 400px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      line-height: 30px;
+      box-shadow: 5px 8px 2px 2px rgb(6 6 6 / 20%);
+    }
+
+    #ajaxUrl {
+      width: 200px;
+    }
+
+    .output-wrapper {
+      display: grid;
+      margin: 10px 0 0;
+      width: 400px;
+      height: 400px;
+      background-color: rgb(7, 7, 7);
+      overflow: auto;
+      box-shadow: 5px 8px 2px 2px rgb(83 69 69 / 20%);
+    }
+  </style>
+</head>
+
+<body>
+  <form id="uploadForm">
+    <div>
+      <label>转码服务地址：</label><input type="text"
+             id="ajaxUrl"
+             placeholder="请输入服务器地址"
+             value="http://localhost:9000/transcode">
+    </div>
+    <div>
+      <input type="file"
+             id="videoFile"
+             accept=".mkv">
+    </div>
+    <div>
+      <button type="button"
+              id="uploadButton">开始转码</button>
+    </div>
+  </form>
+  <div id="message-wraper">
+    <p id="statusMessage"></p>
+  </div>
+  <div class="output-wrapper">
+    <div class="content-wrapper"></div>
+  </div>
+  <p>
+    <strong style="color: red;">此版本适用于ffmpeg服务器运行在客户端。</strong>
+  </p>
+  <script>
+
+    const recordDom = document.getElementsByClassName('content-wrapper')[0];
+    const fileDom = document.getElementById('videoFile');
+    const infoList = [];
+    document.getElementById("uploadButton").addEventListener("click", function () {
+      const ajaxUrl = getUrl();
+      if (!ajaxUrl) {
+        addInfo(false, 'Please enter a valid URL.')
+        return;
+      }
+
+      const fileInput = document.getElementById("videoFile");
+      const videoFile = fileInput.files[0];
+
+      if (!videoFile) {
+        addInfo(false, 'Please select a video file.')
+        return;
+      }
+      addInfo(true, `转码前文件大小${(videoFile.size / 1024 / 1024).toFixed(4)
+        }MB`);
+      const formData = new FormData();
+      let h_blob = new Blob([videoFile], { type: videoFile.type });
+      formData.append("videoData", h_blob, videoFile.name);
+      addInfo(true, '开始转码...');
+      const s_time = new Date();
+      fetch(ajaxUrl, {
+        method: "POST",
+        body: formData
+      }).then(async (r) => {
+        addInfo(true, '转码成功...');
+        const e_time = new Date();
+        let b = await r.blob()
+        addInfo(true, `转码后文件大小${(b.size / 1024 / 1024).toFixed(4)
+          }MB`);
+        addInfo(true, `本次转码用时${((e_time - s_time) / 1000).toFixed(4)
+          }秒`);
+        const url = window.URL.createObjectURL(b);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = "output.mp4";
+        window.a = a;
+        a.click();
+        window.URL.revokeObjectURL(url);
+        if (fileDom) {
+          fileDom.value = null;
+        }
+      }).catch((error) => {
+        addInfo(false, error);
+        addInfo(false, 'Error during transcoding.')
+      });
+    });
+
+    function getUrl() {
+      let a = document.getElementById('ajaxUrl');
+      if (a.value) {
+        return a.value;
+      }
+    }
+    function testAjaxUrl() { }
+    function addInfo(type, message) {
+      const timestamp = new Date().toLocaleString();
+      const messageElement = document.createElement('p');
+      if (type) {
+        messageElement.style.color = '#ffff';
+        messageElement.innerHTML = `[${timestamp}] --[INFO] --${message}`;
+      } else {
+        messageElement.style.color = 'red';
+        messageElement.innerHTML = `[${timestamp}] --[ERROR] --${message}`;
+      } infoList.push(message);
+      recordDom.appendChild(messageElement);
+    }
+  </script>
+</body>
+
+</html>
