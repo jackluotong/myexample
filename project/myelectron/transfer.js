@@ -2,6 +2,7 @@
    * @description node part
 */
   //#region  
+  const { port } =require ("./package");
   const express = require("express");
   const app = express();
   const ffmpeg = require("fluent-ffmpeg");
@@ -28,8 +29,7 @@
   
   const logger = log4js.getLogger();
   app.use(cors());
-  const port = 9000;
-  
+  app.set('port', port);
   app.use(bodyParser.json());
   const storage = multer.memoryStorage();
   const upload = multer({ storage: storage });
@@ -85,7 +85,9 @@
       })
       .run();
   });
-  
+  app.get('/', (req, res) => {
+    res.json({msg:'success'});
+  });
   app.listen(port, () => {
     logger.info(`[connect success]:Connecting to ${port}`);
   });

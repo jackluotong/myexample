@@ -1,52 +1,44 @@
-process.env['ELECTRON_DISABLE_SECURITY_WARNINGS'] = 'true';
-
-const { app, BrowserWindow ,Menu} = require("electron");
+// process.env['ELECTRON_DISABLE_SECURITY_WARNINGS'] = 'true';
+const { app, BrowserWindow ,Menu,ipcMain} = require("electron");
 const { spawn } = require("child_process");
+const path = require('node:path');
+const { name } = require("./package.json");
+
 let expressServer;
+let win;
+const appName = app.getPath("exe");
+const expressAppUrl = "http://127.0.0.1:9000";
+const expressPath = appName.endsWith(`${name}.exe`)
+  ? path.join("./resources/app.asar", "./transfer.js")
+  : "./transfer.js";
+
 function createWindow() {
-  // 创建浏览器窗口
-  const win = new BrowserWindow({
+  win = new BrowserWindow({
     width: 600,
     height: 700,
     // frame: false, 
-    resizable: false ,
+    // resizable: false ,
     webPreferences: {
       nodeIntegration: true, 
+      contextIsolation: true,
+      // preload: path.join(__dirname, 'transfer.js'),
+      preload: path.join(__dirname, "./preload.js"),
     },
   });
 
-  // 加载index.html文件
   win.loadFile("./index.html");
 
-  // 打开开发者工具
-  // win.webContents.openDevTools();
 }
 app.on('ready', ()=>{
-  createMenu(); // 创建菜单
-  expressServer = spawn("node", ["transfer.js"]);
-  expressServer.stdout.on("data", (data) => {
-    console.log(data.toString());
-  });
+  createMenu(); 
 })
 
 app.whenReady().then(() => {
+  // startExpressServer();
   createWindow();
  /**
    * @description node part
 */
-
-// console.log(serverProcess)
-// serverProcess.on("error", (err) => {
-//   console.error("Error starting server process:", err);
-// });
-
-// serverProcess.stdout.on("data", (data) => {
-//   console.log(`Server output: ${data}`);
-// });
-
-// serverProcess.stderr.on("data", (data) => {
-//   console.error(`Server error: ${data}`);
-// });
 });
 
 app.on("window-all-closed", () => {
@@ -61,7 +53,18 @@ app.on("activate", () => {
   }
 });
 
-// 创建 menu
+function startExpressServer() {
+  // expressServer = spawn("node", ["transfer.js"]);
+  // expressServer.stdout.on("data", (data) => {
+  //   console.log(data.toString());
+  // });
+  const expressAppProcess = spawn(appName, [expressPath], { env: { ELECTRON_RUN_AS_NODE: "1" } });
+
+  [expressAppProcess.stdout, expressAppProcess.stderr].forEach(redirectOutput);
+}
+function refreshWindows(){
+  win.reload();
+}
 function createMenu() {
   let menuStructure = [
       {
@@ -71,18 +74,21 @@ function createMenu() {
                   label: '配置',
               },
               {
-                  label: '刷新', // 刷新页面
+                  label: '刷新', 
                   click() {
                       refreshWindows()
                   }
               },
               {
                   label: '打开调试窗口',
+                  click() {
+                      win.webContents.openDevTools();
+                  }
               },
               {
                   label: '关闭调试窗口',
-                  click(menuItem, targetWindow) {
-                      targetWindow.closeDevTools()
+                  click() {
+                      win.closeDevTools()
                   }
               },
           ]
