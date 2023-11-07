@@ -10,7 +10,7 @@ const path = require("path");
 const log4js = require("log4js");
 const os = require("os");
 const logDirectory = path.join(os.homedir(), "ffmpeg-transfer");
-
+const { checkVersion } = require("../check/version.js");
 log4js.configure({
   appenders: {
     file: {
@@ -94,7 +94,7 @@ app.get("/testing", (req, res) => {
   // });
   res.send(successText);
 });
-
+checkVersion(app);
 app.listen(port, () => {
   logger.info(`[connect success]:Connecting to ${port}`);
 });

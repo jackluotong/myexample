@@ -1,12 +1,12 @@
 {
   "name": "ffmpeg-transfer",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "pkg": "pkg . --out-path=dist/",
-    "pkg:window": "pkg . --out-path=dist/windows --targets=node12-win-x64",
+    "pkg:window": "npm version patch && pkg . --out-path=dist/windows --targets=node12-win-x64",
     "pkg:macos": "pkg . --out-path=dist/macos --targets=node12-macos-x64"
   },
   "keywords": [],
