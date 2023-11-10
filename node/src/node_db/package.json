@@ -1,0 +1,26 @@
+{
+  "name": "nodedb",
+  "version": "1.0.1",
+  "description": "node.js and database test",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && pause",
+    "clean:d": "rmdir /s /q dist",
+    "clean:n": "rmdir /s /q node_modules",
+    "start": "nodemon"
+  },
+  "keywords": [
+    "node.js",
+    "mysql"
+  ],
+  "author": "lt",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "multer": "^1.4.5-lts.1",
+    "mysql2": "^3.6.3",
+    "read-excel-file": "^5.7.1",
+    "sequelize": "^6.34.0"
+  }
+}
