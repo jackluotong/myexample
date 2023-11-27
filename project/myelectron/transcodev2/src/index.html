@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>文件上传示例</title>
+    <style>
+      #drop-area {
+        border: 2px dashed #ccc;
+        border-radius: 8px;
+        padding: 20px;
+        text-align: center;
+        cursor: pointer;
+      }
+
+      #status {
+        margin-top: 20px;
+      }
+    </style>
+  </head>
+  <body>
+
+    <div id="drop-area">
+      <p>将文件拖拽至此处或点击选择文件</p>
+      <input type="file" id="file-input" style="display: none">
+    </div>
+
+    <div id="status"></div>
+
+    <script>
+      const dropArea = document.getElementById('drop-area');
+      const fileInput = document.getElementById('file-input');
+      const status = document.getElementById('status');
+      const url = 'http://localhost:9000/v1/transcode'
+      dropArea.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        dropArea.style.border = '2px dashed #38b2ac';
+      });
+
+      dropArea.addEventListener('dragleave', () => {
+        dropArea.style.border = '2px dashed #ccc';
+      });
+
+      dropArea.addEventListener('drop', (e) => {
+        e.preventDefault();
+        dropArea.style.border = '2px dashed #ccc';
+        const file = e.dataTransfer.files[0];
+        fetchMethod(file);
+      });
+
+      // 点击选择文件时触发 input[type=file] 元素的点击事件
+      dropArea.addEventListener('click', () => {
+        fileInput.click();
+      });
+
+      // 选择文件后的事件处理
+      fileInput.addEventListener('change', () => {
+        const file = fileInput.files[0];
+        fetchMethod(file);
+      });
+
+      function fetchMethod(videoFile) {
+        const formData = new FormData();
+        let h_blob = new Blob([videoFile], {type: videoFile.type});
+        formData.append("videoData", h_blob, videoFile.name);
+        fetch(url, {
+          method: "POST",
+          body: formData
+        }).then(async r => {
+          let b = await r.blob();
+          console.log(b);
+        })
+      }
+    </script>
+  </body>
+</html>

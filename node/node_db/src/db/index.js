@@ -15,6 +15,7 @@ function save(dataToSave) {
 async function createTableAndInsertData(userName) {
   try {
     const connection = await mysql.createConnection(db_config);
+    console.log(connection)
     my_connect = connection;
     const createTableSQL = `
       CREATE TABLE IF NOT EXISTS users (
