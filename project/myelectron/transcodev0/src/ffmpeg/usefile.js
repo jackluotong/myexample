@@ -18,7 +18,7 @@ log4js.configure({
   appenders: {
     file: {
       type: "file",
-      filename: path.join(logDirectory, "app.log"),
+      filename: path.join(logDirectory, "test", "app.log"),
     },
     console: { type: "console" },
   },
